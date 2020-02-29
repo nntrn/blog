@@ -6,6 +6,9 @@ module.exports = {
     username: 'nntrn'
   },
   stylesheets: [
-    'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/night-owl.min.css'
+    'https://unpkg.com/normalize.css@8.0.1/normalize.css',
+    'https://unpkg.com/sanitize.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/night-owl.min.css',
+    '/style.css'
   ]
 }
