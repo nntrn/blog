@@ -3,14 +3,14 @@ import Nav from './Nav'
 import BLOG_CONFIG from '../blog.config'
 
 const Page = props => {
-  const { title, children, ...content } = props
+  const { title, children, html, content, frontmatter, ...rest } = props
   return (
     <>
       <SiteHead
         title={title}
         description={props.description}
         stylesheets={BLOG_CONFIG.stylesheets}
-        {...content}
+        {...{ ...frontmatter, ...rest }}
       />
       <Nav />
       <div className="container-fluid">

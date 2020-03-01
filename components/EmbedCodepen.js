@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 const EmbedCodepen = props => {
   const { height, target, className, label, ...send } = props
   const iframeId = [ 'Embed', props.title.replace(/\s/g, '-') ].join('-')
-  
+
   const style = {
     container: {
       height: 0,
@@ -18,7 +18,8 @@ const EmbedCodepen = props => {
       background: '#f1c40f',
       top: 0,
       left: 0,
-      fontFamily: 'sans-serif',
+      font: '12px sans-serif',
+      textTransform: 'uppercase',
       color: '#222',
       border: 0,
       padding: '.25rem'
@@ -29,6 +30,7 @@ const EmbedCodepen = props => {
     ev.target.parentElement.parentElement.style.height = height
     ev.target.parentElement.parentElement.style.borderWidth = '5px'
   }
+
   return (
     <div id={[ 'Container', iframeId ].join('-')} style={{ ...style.container }}>
       <form
@@ -40,8 +42,8 @@ const EmbedCodepen = props => {
         <input type="hidden" name="data" value={JSON.stringify(send)} />
         <button
           type="submit"
-          onClick={ev => handleButtonClick(ev)}
           style={{ ...style.button }}
+          onClick={ev => handleButtonClick(ev)}
         >
           {label}
         </button>
@@ -49,7 +51,11 @@ const EmbedCodepen = props => {
       <iframe
         name={iframeId}
         id={iframeId}
-        style={{ width: '100%', height: '100%' }}
+        referrerPolicy="no-referrer"
+        scrolling="no"
+        allowFullScreen={true}
+        allowtransparency="true"
+        style={{ width: '100%', height: '100%', overflow: 'hidden' }}
       ></iframe>
     </div>
   )
@@ -59,48 +65,36 @@ EmbedCodepen.defaultProps = {
   title: '',
   description: '',
   tags: [],
+  // Which editors are open. 1 iss open. order is: HTML, CSS, JS.
   editors: '111',
-  // Which editors are open. 1 is open. order is: HTML, CSS, JS.
   layout: 'top',
-  // Optional layouts: top || left || right
   html: '',
   html_pre_processor: 'none',
-  // Optional values: "none" || "slim" || "haml" || "markdown"
   css: '',
   css_pre_processor: 'none',
-  // Optional values: "none" || "less" || "scss" || "sass" || "stylus"
   css_starter: 'normalize',
-  // Optional values:  "normalize" || "reset" || "neither",
   css_prefix: 'neither',
-  // Optional values:  "autoprefixer" || "prefixfree" || "neither"
   js: '',
   js_pre_processor: 'none',
-  // Optional values: "none" || "coffeescript" || "babel" || "livescript" || "typescript"
   html_classes: '',
-  // CSS class to apply to html tag.
   head:
     '<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale = 1.0, user-scalable = no">',
-  // Content to include inside the HTML head tag.
+  // Use semi-colon to separate multiple files.
   css_external: '',
-  // Use semi-colon to separate multiple files.
   js_external: '',
-  // Use semi-colon to separate multiple files.
-  // Optional values: true || false -
-  // When the Pen is saved, it will save as Private if logged in user has that privilege,
-  // otherwise it will save as public
   private: false,
-  // If supplied, the Pen will save as a fork of this id.
-  // Note it's not the slug, but ID.
-  // You can find the ID of a Pen with `window.CP.pen.id` in the browser console.
   parent: null,
   // component internal
-  label: 'See on CodePen',
+  label: 'View CodePen',
   target: '',
   className: '',
-  height: '50vh'
+  height: '350px'
 }
 
 EmbedCodepen.propTypes = {
+  layout: PropTypes.oneOf([ 'top', 'left', 'right' ]),
+  css_starter: PropTypes.oneOf([ 'normalize', 'reset', 'neither' ]),
+  css_prefix: PropTypes.oneOf([ 'autoprefixer', 'prefixfree', 'neither' ]),
   html_pre_processor: PropTypes.oneOf([ 'none', 'slim', 'haml', 'markdown' ]),
   css_pre_processor: PropTypes.oneOf([ 'none', 'less', 'scss', 'sass', 'stylus' ]),
   js_pre_processor: PropTypes.oneOf([

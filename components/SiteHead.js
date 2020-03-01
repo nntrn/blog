@@ -6,6 +6,7 @@ import BLOG_CONFIG from '../blog.config'
 const SiteHead = props => {
   const title = [ props.title, BLOG_CONFIG.title ].filter(Boolean).join(' | ')
   const description = props.description || BLOG_CONFIG.description
+  
   return (
     <Head>
       <title>{title}</title>

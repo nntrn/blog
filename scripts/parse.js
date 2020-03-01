@@ -9,15 +9,6 @@ const remark2rehype = require('remark-rehype')
 
 const directory = path.resolve(__dirname, '../', 'content/')
 
-// const { htmlEscape } = require('../components/utils/content')
-
-function htmlEscape(s) {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-}
-
 const markdownFiles = {
   files: [],
   addFile: function (filePath, tree) {
@@ -37,14 +28,13 @@ const markdownFiles = {
 
 function readMarkdown(filePath) {
   const fileData = fs.readFileSync(filePath, 'utf-8')
+  const frontmatter = fm(fileData)
+  const fileLines = frontmatter.body.split('\n')
 
   var tree = unified()
     .use(markdown)
     .parse(fileData)
     .children.filter(e => e.type === 'code')
-
-  const frontmatter = fm(fileData)
-  const fileLines = frontmatter.body.split('\n')
 
   var processor = unified()
     .use(markdown)
@@ -56,7 +46,7 @@ function readMarkdown(filePath) {
     content: fileLines.join('\n'),
     html: processor.processSync(fileLines.join('\n')).toString(),
     lines: fileLines.length,
-    source: tree.map(e => ({ type: e.type, lang: e.lang, value: e.value })),
+    source: tree.map(e => ({ lang: e.lang, value: e.value })),
     frontmatter: frontmatter.attributes
   }
 }

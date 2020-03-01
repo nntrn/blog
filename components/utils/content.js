@@ -16,6 +16,15 @@ function htmlEscape(s) {
     .replace(/>/g, '&gt;')
 }
 
+function htmlUnscape(data) {
+  return JSON.stringify(data, null, 2)
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&apos;/g, "'")
+}
+
 function uuid(s = 'xxxxx') {
   var seed = Date.now()
 

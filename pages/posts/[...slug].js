@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
-import marked from 'marked'
 import Highlight from 'react-highlight'
+import marked from '../../components/utils/marked'
 import Page from '../../components/Page'
 import EmbedCodepen from '../../components/EmbedCodepen'
 import blog from '../../summary.json'
@@ -16,50 +16,48 @@ const preBlockLang = {
 
 const Post = props => {
   const router = useRouter()
-  const slug = router.query.slug || []
+  const content = blog.filter(e => '/' + e.url === router.asPath)[0]
+  const contentMd = (content && content.content) || '# markdown'
+  const source = {
+    html: '',
+    css: '',
+    js: ''
+  }
 
-  var content = blog.filter(e => '/' + e.url === router.asPath)[0]
-  var contentMd = (content && content.content) || '# hi'
-
-  var source = {
-    css:
+  Object.keys(source).forEach(lang => {
+    source[lang] =
       (content &&
         content.source
-          .filter(e => preBlockLang.css.includes(e.lang))
-          .map(e => e.value)
-          .join('\n')) ||
-      '',
-    html:
-      (content &&
-        content.source
-          .filter(e => preBlockLang.html.includes(e.lang))
-          .map(e => e.value)
-          .join('\n')) ||
-      '',
-    js:
-      (content &&
-        content.source
-          .filter(e => preBlockLang.js.includes(e.lang))
+          .filter(e => preBlockLang[lang].includes(e.lang))
           .map(e => e.value)
           .join('\n')) ||
       ''
-  }
+  })
+
+  const editorLayout = [
+    source.html ? '1' : '0',
+    source.css ? '1' : '0',
+    source.js ? '1' : '0',
+    source.js ? '1' : '0'
+  ].join('')
 
   const title = (content && content.frontmatter.title) || 'title'
   const description = (content && content.frontmatter.description) || 'description'
 
   return (
-    <Page title={title} description={description} { ...content }>
-      <EmbedCodepen
-        className="simple-link"
-        title={title}
-        description={description}
-        js={source.js}
-        css={source.css}
-        html={source.html}
-        editors="39008"
-        height="300px"
-      />
+    <Page title={title} description={description} {...content}>
+      {content && content.frontmatter.codepen && (
+        <EmbedCodepen
+          title={title}
+          description={description}
+          js={source.js}
+          css={source.css}
+          html={source.html}
+          tags={content && content.frontmatter.tags}
+          height="350px"
+          editors={editorLayout}
+        />
+      )}
       <Highlight innerHTML>{marked(contentMd)}</Highlight>
     </Page>
   )
