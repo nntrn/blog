@@ -9,7 +9,7 @@ const type = {
 
 module.exports = {
   title: 'blog',
-  description: 'a blog',
+  description: 'by annie tran',
   favicon: '/favicon.ico',
   codepen: {
     username: 'nntrn'
@@ -34,6 +34,7 @@ module.exports = {
       description: type.String,
       tags: type.Array,
       sources: type.Array,
+      references: type.Array,
       preview: type.Boolean,
       codepen: type.Boolean
     }

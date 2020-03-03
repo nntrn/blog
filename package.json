@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "summary": "node scripts/parse",
+    "summary": "node scripts/parse && prettier public/routes.js --write",
     "build": "next build",
     "start": "next start",
+    "export": "next export",
     "add": "node scripts/new-post"
   },
   "devDependencies": {
@@ -17,6 +18,7 @@
   },
   "dependencies": {
     "front-matter": "^3.1.0",
+    "isomorphic-unfetch": "^3.0.0",
     "next": "9.2.2",
     "prop-types": "^15.7.2",
     "react": "16.13.0",

@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import SiteHead from './SiteHead'
 import Nav from './Nav'
 import config from '../blog.config'
@@ -13,9 +12,6 @@ const Page = props => {
         stylesheets={config.stylesheets}
         {...{ ...frontmatter, ...rest }}
       />
-      <Link href="/">
-        <h1 className="site-title">{config.title}</h1>
-      </Link>
       <Nav routes={config.routes} />
       <div className="container-fluid">
         <header>

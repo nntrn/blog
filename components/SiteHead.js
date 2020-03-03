@@ -10,17 +10,18 @@ const SiteHead = props => {
   return (
     <Head>
       <title>{title}</title>
-      <meta charSet="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="description" content={description} />
-      <link rel="shortcut icon" href={BLOG_CONFIG.favicon} />
-      <meta property="og:url" content={props.url} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
+      <meta charSet='UTF-8' />
+      <meta name='viewport' content='width=device-width, initial-scale=1' />
+      <meta name='description' content={description} />
+      <link rel='shortcut icon' href={BLOG_CONFIG.favicon} />
+      <meta property='og:url' content={props.url} />
+      <meta property='og:title' content={title} />
+      <meta property='og:description' content={description} />
       {props.stylesheets &&
         props.stylesheets.map((stylesheet, i) => (
-          <link key={i} rel="stylesheet" href={stylesheet} />
+          <link key={i} rel='stylesheet' href={stylesheet} />
         ))}
+      <script src='/routes.js'/>
     </Head>
   )
 }

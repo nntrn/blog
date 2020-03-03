@@ -5,7 +5,7 @@ const Nav = ({ routes, ...rest }) => {
     <nav {...rest}>
       {Object.keys(routes).map(e => (
         <Link href={routes[e]} key={e}>
-          <a style={{marginRight: '.3rem'}}>{e}</a>
+          <a style={{marginRight: '.5rem'}}>{e}</a>
         </Link>
       ))}
     </nav>

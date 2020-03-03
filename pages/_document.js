@@ -9,7 +9,7 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head></Head>
-        <body tabIndex="0">
+        <body tabIndex='0'>
           <Main />
           <NextScript />
         </body>

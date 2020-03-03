@@ -64,3 +64,14 @@ function getFiles(dir, regex = /.*/, files_ = []) {
 console.log(getFiles(directory, /\.md$/))
 
 fs.writeFileSync('./summary.json', JSON.stringify(markdownFiles.files, null, 2))
+
+// const publicRoutes = markdownFiles.files.map(e => ({ url: e.url, content: e.content.split('\n').filter(Boolean).join(' ') }))
+
+const publicRoutes = markdownFiles.files.map(e => ({
+  url: e.url,
+  title: e.frontmatter.title,
+  content: e.content.split('\n').filter(Boolean).join(' ').replace(/```.*```/g, '').replace(/^>\s/, ''),
+  tags: e.frontmatter.tags
+}))
+
+fs.writeFileSync('./public/routes.js', `const routes = ${JSON.stringify(publicRoutes, null, 2)}`)
