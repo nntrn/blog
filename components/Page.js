@@ -1,6 +1,7 @@
+import Link from 'next/link'
 import SiteHead from './SiteHead'
 import Nav from './Nav'
-import BLOG_CONFIG from '../blog.config'
+import config from '../blog.config'
 
 const Page = props => {
   const { title, children, html, content, frontmatter, ...rest } = props
@@ -9,16 +10,21 @@ const Page = props => {
       <SiteHead
         title={title}
         description={props.description}
-        stylesheets={BLOG_CONFIG.stylesheets}
+        stylesheets={config.stylesheets}
         {...{ ...frontmatter, ...rest }}
       />
-      <Nav />
+      <Link href="/">
+        <h1 className="site-title">{config.title}</h1>
+      </Link>
+      <Nav routes={config.routes} />
       <div className="container-fluid">
         <header>
           <h1>{title}</h1>
         </header>
         <main>{children}</main>
       </div>
+      <hr />
+      <footer>&copy; {`${new Date().getUTCFullYear()} Annie Tran`}</footer>
     </>
   )
 }

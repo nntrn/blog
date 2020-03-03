@@ -1,17 +1,11 @@
-import config from '../blog.config'
 import Link from 'next/link'
 
-const routes = {
-  '/': 'Home',
-}
-
-
-const Nav = props => {
+const Nav = ({ routes, ...rest }) => {
   return (
-    <nav>
+    <nav {...rest}>
       {Object.keys(routes).map(e => (
-        <Link href={e} key={e}>
-          <a>{routes[e]}</a>
+        <Link href={routes[e]} key={e}>
+          <a style={{marginRight: '.3rem'}}>{e}</a>
         </Link>
       ))}
     </nav>

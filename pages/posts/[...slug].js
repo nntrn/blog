@@ -1,8 +1,10 @@
 import { useRouter } from 'next/router'
 import Highlight from 'react-highlight'
-import marked from '../../components/utils/marked'
+
 import Page from '../../components/Page'
+import Preview from '../../components/Preview'
 import EmbedCodepen from '../../components/EmbedCodepen'
+import Tags from '../../components/Tags'
 import blog from '../../summary.json'
 
 const preBlockLang = {
@@ -17,7 +19,9 @@ const preBlockLang = {
 const Post = props => {
   const router = useRouter()
   const content = blog.filter(e => '/' + e.url === router.asPath)[0]
-  const contentMd = (content && content.content) || '# markdown'
+
+  const contentHTML = content && content.html
+
   const source = {
     html: '',
     css: '',
@@ -37,7 +41,6 @@ const Post = props => {
   const editorLayout = [
     source.html ? '1' : '0',
     source.css ? '1' : '0',
-    source.js ? '1' : '0',
     source.js ? '1' : '0'
   ].join('')
 
@@ -46,6 +49,8 @@ const Post = props => {
 
   return (
     <Page title={title} description={description} {...content}>
+      {content && content.frontmatter.tags && <Tags tags={content.frontmatter.tags} />}
+      <hr />
       {content && content.frontmatter.codepen && (
         <EmbedCodepen
           title={title}
@@ -58,7 +63,19 @@ const Post = props => {
           editors={editorLayout}
         />
       )}
-      <Highlight innerHTML>{marked(contentMd)}</Highlight>
+      {content && (content.frontmatter.codepen || content.frontmatter.preview) && (
+        <Preview
+          height={content.frontmatter.previewHeight}
+          title={title}
+          css={source.css}
+          html={source.html}
+          js={source.js}
+        />
+      )}
+      <hr />
+      <div style={{ marginTop: '1.5rem' }}>
+        <Highlight innerHTML>{contentHTML}</Highlight>
+      </div>
     </Page>
   )
 }
