@@ -3,9 +3,8 @@ const path = require('path')
 const unified = require('unified')
 const fm = require('front-matter')
 const markdown = require('remark-parse')
-const format = require('rehype-format')
-const html = require('rehype-stringify')
-const remark2rehype = require('remark-rehype')
+
+const marked = require('./utils/marked')
 
 const directory = path.resolve(__dirname, '../', 'content/')
 
@@ -36,15 +35,9 @@ function readMarkdown(filePath) {
     .parse(fileData)
     .children.filter(e => e.type === 'code')
 
-  var processor = unified()
-    .use(markdown)
-    .use(remark2rehype)
-    .use(format, { indentInitial: false })
-    .use(html)
-
   return {
     content: fileLines.join('\n'),
-    html: processor.processSync(fileLines.join('\n')).toString(),
+    html: marked(fileLines.join('\n')),
     lines: fileLines.length,
     source: tree.map(e => ({ lang: e.lang, value: e.value })),
     frontmatter: frontmatter.attributes
