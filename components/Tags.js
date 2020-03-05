@@ -1,6 +1,7 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Tags = styled.div`
+  margin: 0.4rem 0;
   span {
     background: var(--code-background);
     border-radius: 3px;
@@ -12,18 +13,20 @@ const Tags = styled.div`
     color: var(--text-color--lighter);
   }
   .fas {
-    color: var(--primary-color-500);
+    color: var(--text-color--lighter)
   }
-`
+`;
 
-const index = ({ tags, ...rest }) => {
+const index = ({tags, ...rest}) => {
   return (
     <Tags>
       <i className="fas fa-tags fa-sm"></i>
-      {tags.map(e => (
-        <span key={e} { ...rest }>{e}</span>
+      {tags.map((e) => (
+        <span key={e} {...rest}>
+          {e}
+        </span>
       ))}
     </Tags>
   )
 }
-export default index
+export default index;

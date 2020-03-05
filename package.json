@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "summary": "node scripts/parse && prettier public/routes.js --write",
+    "dev": "next",
+    "summary": "node scripts/parse",
+    "postsummary": "prettier public/routes.js --write && eslint ./public/*.js --fix",
+    "lint": "eslint ./components/*.js --fix",
     "build": "next build",
     "start": "next start",
-    "export": "next export",
+    "export": "next build && next export",
+    "postexport": "prettier --print-width 155 \"./out/**/*.html\" --write",
     "add": "node scripts/new-post"
   },
   "devDependencies": {

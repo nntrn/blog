@@ -1,8 +1,9 @@
 import Page from '../components/Page'
+import config from '../blog.config';
 
 const Home = () => {
   return (
-    <Page/>
+    <Page title={config.title}/>
   )
 }
 

@@ -1,26 +1,27 @@
 import SiteHead from './SiteHead'
 import Nav from './Nav'
+import Container from './Container'
 import config from '../blog.config'
 
 const Page = props => {
-  const { title, children, html, content, frontmatter, ...rest } = props
+  const { description, url, title, children, html, content, frontmatter, ...rest } = props
   return (
     <>
-      <SiteHead
-        title={title}
-        description={props.description}
-        stylesheets={config.stylesheets}
-        {...{ ...frontmatter, ...rest }}
-      />
+      <SiteHead />
       <Nav routes={config.routes} />
-      <div className="container-fluid">
-        <header>
-          <h1>{title}</h1>
-        </header>
-        <main>{children}</main>
-      </div>
-      <hr />
-      <footer>&copy; {`${new Date().getUTCFullYear()} Annie Tran`}</footer>
+      {children}
+      <Container
+        component='footer'
+        style={{
+          padding: '3rem',
+          marginTop: '2rem',
+          boxShadow: 'inset 0 1px rgba(0,0,0,.15)',
+          background: 'var(--light)',
+          font: '.7em regular var(--font-family) '
+        }}
+      >
+        <span>&copy; {`${new Date().getUTCFullYear()} Annie Tran`}</span>
+      </Container>
     </>
   )
 }

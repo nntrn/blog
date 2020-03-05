@@ -1,63 +1,105 @@
-import { useRef, useEffect } from 'react'
-import styled from 'styled-components'
+import {useRef, useEffect} from 'react';
+import styled from 'styled-components';
+
+import EmbedCodepen from './EmbedCodepen';
 
 const Container = styled.div`
-  border: 3px solid rgb(34, 34, 34);
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 10px 4px;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.35);
   border-radius: 5px;
-  height: ${props => props.h};
+  height: ${(props) => props.h};
   position: relative;
-  overflow: scroll;
+  overflow: hidden;
   resize: vertical;
+  min-height: 100px;
+  max-height: 100vh;
+  margin: 1.5rem 0;
   .output {
-    position: sticky;
+    position: absolute;
+    background: white;
+    width: 100%;
     top: 0;
-    padding: 0rem 0.25rem;
     font-family: sans-serif;
-    font-size: 12px;
-    background: black;
-    color: #999;
-    display: block;
+    font-size: 0.8em;
+    color: #000;
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+    span {
+      padding: 0 0.25rem;
+    }
+    button {
+      &:hover {
+        opacity: 0.7;
+      }
+    }
   }
   iframe {
     width: 100%;
-    overflow: scroll;
     height: 100%;
   }
-`
-const Preview = props => {
-  const { html, css, js, height, stylesheets, title = 'Untitled', ...restProps } = props
+`;
 
-  const refiFrame = useRef(null)
+const Preview = (props) => {
+  const {
+    html,
+    css,
+    js,
+    stylesheets,
+    frontmatter,
+    height,
+    title = 'Untitled',
+    ...restProps
+  } = props;
+
+  const refiFrame = useRef(null);
 
   const styleLinks = stylesheets
-    .map(e => `<link rel='stylesheet' href='${e}'>`)
-    .join('\n')
+    .map((e) => `<link rel='stylesheet' href='${e}'>`)
+    .join('\n');
 
   useEffect(() => {
-    var content = `<meta charset='utf-8'>
-  <meta name='viewport' content='width=device-width, minimum-scale=1.0, maximum-scale = 1.0, user-scalable = no'>
-  ${styleLinks}
-  <style>html,body{overflow:scroll;height:100vh;}</style>
-  <style>${css}</style>
-  ${html}
-  <script>${js}</script>`
+    const content = [
+      '<meta charset="utf-8">',
+      '<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale = 1.0, user-scalable = no">',
+      styleLinks,
+      '<style>body{padding: 2rem 1rem}</style>',
+      css && `<style>\n${css}\n</style>`,
+      '</style>',
+      html,
+      `<script>\n${js}\n</script>`
+    ]
+      .filter(Boolean)
+      .join('\n');
 
     var node = Object.assign(document.createElement('div'), {
       innerHTML: content
-    })
+    });
 
-    refiFrame.current.contentDocument.open()
-    refiFrame.current.contentDocument.write(node.innerHTML)
-    refiFrame.current.contentDocument.close()
-  }, [])
+    refiFrame.current.contentDocument.open();
+    refiFrame.current.contentDocument.write(node.innerHTML);
+    refiFrame.current.contentDocument.close();
+  }, []);
+
+  const iframeId = [ 'Embed', props.title.replace(/\s/g, '-') ].join('-');
 
   return (
-    <Container h={props.height}>
-      <span className="output">OUTPUT:</span>
+    <Container h={frontmatter.height || height}>
+      <div className="output">
+        <span>OUTPUT</span>
+        <EmbedCodepen
+          title={title}
+          target={iframeId}
+          js={js}
+          css={css}
+          html={html}
+          tags={frontmatter.tags}
+        />
+      </div>
       <iframe
         scrolling="yes"
         ref={refiFrame}
+        name={iframeId}
+        id={iframeId}
         title={title}
         allowFullScreen={true}
         sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts"
@@ -65,11 +107,12 @@ const Preview = props => {
         {...restProps}
       />
     </Container>
-  )
-}
+  );
+};
+
 Preview.defaultProps = {
   stylesheets: ['https://necolas.github.io/normalize.css/8.0.1/normalize.css'],
   height: '300px'
-}
+};
 
-export default Preview
+export default Preview;
