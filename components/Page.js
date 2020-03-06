@@ -17,7 +17,7 @@ const Page = props => {
           marginTop: '2rem',
           boxShadow: 'inset 0 1px rgba(0,0,0,.15)',
           background: 'var(--light)',
-          font: '.7em regular var(--font-family) '
+          font: '.8em regular var(--font-sans) '
         }}
       >
         <span>&copy; {`${new Date().getUTCFullYear()} Annie Tran`}</span>

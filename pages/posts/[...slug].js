@@ -5,6 +5,7 @@ import Container from '../../components/Container';
 import Page from '../../components/Page';
 import Preview from '../../components/Preview';
 import Tags from '../../components/Tags';
+import Sources from '../../components/Sources';
 import blog from '../../summary.json';
 
 const preBlockLang = {
@@ -75,14 +76,7 @@ const Post = (props) => {
           <Highlight innerHTML>{contentHTML}</Highlight>
         </div>
         {content && content.frontmatter.sources && (
-          <div>
-            <h3>Source{content.frontmatter.sources.length > 1 ? 's' : ''}:</h3>
-            <ul>
-              {content.frontmatter.sources.map((e) => (
-                <li>{e}</li>
-              ))}
-            </ul>
-          </div>
+          <Sources sources={content.frontmatter.sources}/>
         )}
         {content && content.frontmatter.tags && (
           <Tags tags={content.frontmatter.tags} />

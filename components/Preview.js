@@ -6,21 +6,20 @@ import EmbedCodepen from './EmbedCodepen';
 const Container = styled.div`
   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.35);
   border-radius: 5px;
-  height: ${(props) => props.h};
+  height: ${(props) => props.height};
   position: relative;
   overflow: hidden;
   resize: vertical;
   min-height: 100px;
-  max-height: 100vh;
+  max-height: 80vh;
   margin: 1.5rem 0;
   .output {
     position: absolute;
-    background: white;
     width: 100%;
     top: 0;
     font-family: sans-serif;
     font-size: 0.8em;
-    color: #000;
+    color: var(--text-color--lighter);
     display: flex;
     justify-content: space-between;
     text-transform: uppercase;
@@ -78,12 +77,12 @@ const Preview = (props) => {
     refiFrame.current.contentDocument.open();
     refiFrame.current.contentDocument.write(node.innerHTML);
     refiFrame.current.contentDocument.close();
-  }, []);
+  });
 
   const iframeId = [ 'Embed', props.title.replace(/\s/g, '-') ].join('-');
 
   return (
-    <Container h={frontmatter.height || height}>
+    <Container height={frontmatter.previewHeight || height}>
       <div className="output">
         <span>OUTPUT</span>
         <EmbedCodepen
