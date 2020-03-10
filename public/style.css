@@ -100,24 +100,6 @@ a:hover {
   box-shadow: inset 0 -5px 0 0 var(--primary-color-800);
 }
 
-nav a {
-  background: var(--background);
-  padding: 5px 10px;
-  color: var(--text-color--dark);
-  font-family: var(--font-sans);
-  font-weight: 400;
-  text-transform: uppercase;
-  font-size: 0.9em;
-  --primary-color-800: var(--primary-color-400);
-  box-shadow: inset 0 0 0 3px black;
-}
-
-nav a:hover {
-  background: var(--text-color--dark);
-  color: var(--background);
-  box-shadow: inset 0 0 0 3px black;
-}
-
 .intro {
   color: var(--text-color--light);
   font-size: 1.2em;
@@ -169,6 +151,11 @@ h2 {
   font-size: 1.825rem;
 }
 
+h4,
+h5,
+h6 {
+  margin: 0;
+}
 blockquote {
   background: rgba(255, 250, 237, 0.8);
   border-left: 4px solid #ffcc5f;

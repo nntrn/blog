@@ -68,13 +68,32 @@ fs.writeFileSync('./summary.json', JSON.stringify(markdownFiles.files, null, 2))
 const publicRoutes = markdownFiles.files.map(e => ({
   url: '/' + e.url,
   title: e.frontmatter.title,
-  content: e.content.split('\n').filter(Boolean).join(' ').replace(/```.*```/g, '').replace(/^>\s/, ''),
+  description: e.frontmatter.description,
+  content: e.content
+    .split('\n')
+    .filter(Boolean)
+    .join(' ')
+    .replace(/```.*```/g, '')
+    .replace(/^>\s/, ''),
   tags: e.frontmatter.tags
 }))
 
-fs.writeFileSync('./public/routes.js', `const _routes = ${JSON.stringify(publicRoutes, null, 2)}`)
-
 fs.writeFileSync(
-  './routes.json',
-  JSON.stringify(publicRoutes, null, 2)
+  './public/routes.js',
+  `const _routes = ${JSON.stringify(publicRoutes, null, 2)}`
 )
+
+// #searchlist .list{
+//   max-height:60vh;
+//   overflow:scroll;
+//   border:2px solid var(--line-rule-color);
+//   box-shadow: 0 0 20px 3px rgba(0,0,0,.1);
+
+// }
+
+// .list .list-item{
+//     padding:.5rem;
+
+// }
+
+fs.writeFileSync('./routes.json', JSON.stringify(publicRoutes, null, 2))

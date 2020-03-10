@@ -7,7 +7,7 @@ const SiteHead = props => {
   return (
     <Head>
       <meta charSet='UTF-8' />
-      <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no' />
+      <meta name='viewport' content='initial-scale=1.0, width=device-width, viewport-fit=cover' />
       <link rel='shortcut icon' href={config.favicon} />
       {props.children}
 

@@ -1,33 +1,33 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-const EmbedCodepen = (props) => {
-  const {height, target, className, label, children, ...send} = props;
+const EmbedCodepen = props => {
+  const { height, target, className, label, children, ...send } = props
 
-  const handleOutputBar = (ev)=>{
-    ev.target.style.opacity = 0;
+  const handleOutputBar = ev => {
+    ev.target.style.opacity = 0
   }
 
   return (
     <form
-      action="https://codepen.io/pen/define"
-      method="POST"
+      action='https://codepen.io/pen/define'
+      method='POST'
       target={target || 'iframe'}
-      rel="noopener noreferrer"
-      onSubmit={ev=>handleOutputBar(ev)}
+      rel='noopener noreferrer'
+      onSubmit={ev => handleOutputBar(ev)}
     >
-      <input type="hidden" name="data" value={JSON.stringify(send)} />
+      <input type='hidden' name='data' value={JSON.stringify(send)} />
       <button
-        type="submit"
-        title="View Codepen"
-        style={{border: 0, background: 'transparent'}}
+        type='submit'
+        title='View Codepen'
+        style={{ border: 0, background: 'transparent' }}
       >
-        {!children && <i className="fab fa-codepen fa-lg" />}
+        {!children && <i className='fab fa-codepen fa-lg' />}
         {children && children}
       </button>
     </form>
-  );
-};
+  )
+}
 
 EmbedCodepen.defaultProps = {
   title: '',
@@ -57,20 +57,14 @@ EmbedCodepen.defaultProps = {
   target: '',
   className: '',
   height: '350px'
-};
+}
 
 EmbedCodepen.propTypes = {
   layout: PropTypes.oneOf([ 'top', 'left', 'right' ]),
   css_starter: PropTypes.oneOf([ 'normalize', 'reset', 'neither' ]),
   css_prefix: PropTypes.oneOf([ 'autoprefixer', 'prefixfree', 'neither' ]),
   html_pre_processor: PropTypes.oneOf([ 'none', 'slim', 'haml', 'markdown' ]),
-  css_pre_processor: PropTypes.oneOf([
-    'none',
-    'less',
-    'scss',
-    'sass',
-    'stylus'
-  ]),
+  css_pre_processor: PropTypes.oneOf([ 'none', 'less', 'scss', 'sass', 'stylus' ]),
   js_pre_processor: PropTypes.oneOf([
     'none',
     'coffeescript',
@@ -78,6 +72,6 @@ EmbedCodepen.propTypes = {
     'livescript',
     'typescript'
   ])
-};
+}
 
-export default EmbedCodepen;
+export default EmbedCodepen

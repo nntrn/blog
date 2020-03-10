@@ -8,10 +8,10 @@ const Sources = styled.div`
   }
 `
 
-export default ({ sources, ...props }) => {
+export default ({ title = 'Source', sources, ...props }) => {
   return (
-    <Sources>
-      <h3>Source{sources.length > 1 ? 's' : ''}:</h3>
+    <Sources {...props}>
+      <h3>{title}{sources.length > 1 ? 's' : ''}:</h3>
       <ul>
         {sources.map(link => (
           <li key={link}>
@@ -22,12 +22,3 @@ export default ({ sources, ...props }) => {
     </Sources>
   )
 }
-
-//   <div className="sources">
-//   <h3>Source{content.frontmatter.sources.length > 1 ? 's' : ''}:</h3>
-//   <ul>
-//     {content.frontmatter.sources.map((e) => (
-//       <li key={e}>{e}</li>
-//     ))}
-//   </ul>
-// </div>

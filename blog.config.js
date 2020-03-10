@@ -35,8 +35,7 @@ module.exports = {
       tags: type.Array,
       sources: type.Array,
       references: type.Array,
-      preview: type.Boolean,
-      codepen: type.Boolean
+      preview: type.Boolean
     }
   }
 }

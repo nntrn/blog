@@ -8,7 +8,7 @@ const Tags = styled.div`
     padding: 2px 4px;
     font-size: 15px;
     text-transform: uppercase;
-    font-family: sans-serif;
+    font-family: var(--font-sans);
     margin: 0 0.25rem;
     color: var(--text-color--lighter);
   }

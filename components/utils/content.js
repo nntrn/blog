@@ -36,4 +36,4 @@ function uuid(s = 'xxxxx') {
   })
 }
 
-export { camelCase, kebabCase, htmlEscape, uuid }
+export { camelCase, kebabCase, htmlEscape, htmlUnscape, uuid }
