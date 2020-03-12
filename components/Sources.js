@@ -11,7 +11,10 @@ const Sources = styled.div`
 export default ({ title = 'Source', sources, ...props }) => {
   return (
     <Sources {...props}>
-      <h3>{title}{sources.length > 1 ? 's' : ''}:</h3>
+      <h3>
+        {title}
+        {sources.length > 1 ? 's' : ''}:
+      </h3>
       <ul>
         {sources.map(link => (
           <li key={link}>

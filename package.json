@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next",
+    "predev": "yarn run summary",
     "summary": "node scripts/parse",
     "postsummary": "prettier public/routes.js --write && eslint ./public/*.js --fix",
     "lint": "eslint ./components/*.js --fix",
@@ -20,7 +21,15 @@
     "eslint-plugin-react-hooks": "^2.5.0"
   },
   "dependencies": {
+    "@emotion/cache": "11.0.0-next.10",
+    "@emotion/css": "11.0.0-next.10",
+    "@emotion/react": "11.0.0-next.10",
+    "@emotion/server": "11.0.0-next.10",
+    "@emotion/styled": "11.0.0-next.10",
+    "@theme-ui/presets": "^0.3.0",
+    "@theme-ui/prism": "^0.3.0",
     "codemirror": "^5.52.0",
+    "emotion-theming": "^10.0.27",
     "front-matter": "^3.1.0",
     "fuse.js": "^3.4.6",
     "isomorphic-unfetch": "^3.0.0",
@@ -32,6 +41,7 @@
     "react-syntax-highlighter": "^12.2.1",
     "remark-parse": "^7.0.2",
     "styled-components": "^5.0.1",
+    "theme-ui": "^0.3.1",
     "unified": "^8.4.2"
   }
 }

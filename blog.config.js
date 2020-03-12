@@ -1,7 +1,7 @@
 const path = require('path')
 
 const type = {
-  String: '\'\'',
+  String: "''",
   Array: '[]',
   Object: '{}',
   Boolean: false
@@ -16,12 +16,11 @@ module.exports = {
   },
   dir: __dirname,
   stylesheets: [
-    // 'https://unpkg.com/normalize.css@8.0.1/normalize.css',
     'https://unpkg.com/sanitize.css',
-    'https://fonts.googleapis.com/css?family=Source+Serif+Pro&display=swap',
-    'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/night-owl.min.css',
+    // 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/night-owl.min.css',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css',
-    '/style.css'
+    '/codyhouse-framework.css'
+    // '/style.css'
   ],
   routes: {
     Home: '/',
@@ -36,6 +35,12 @@ module.exports = {
       sources: type.Array,
       references: type.Array,
       preview: type.Boolean
+    }
+  },
+  theme: {
+    color: {
+      primary: '#0074d9',
+      secondary: '#e74c3c'
     }
   }
 }
