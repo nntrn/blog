@@ -4,7 +4,7 @@ const _routes = [
     title: 'CSS HSL Color Theme',
     description: 'calculating colors using HSL',
     content: '',
-    tags: [ 'color', 'theme', 'custom properties', 'hsl' ]
+    tags: [ 'color', 'css' ]
   },
   {
     url: '/posts/battery-api',
@@ -13,7 +13,15 @@ const _routes = [
       'For chrome and android devices: track device battery life using Battery Status API [deprecated]',
     content:
       'This pen uses the Battery Status API, which is deprecated, and does not work for Safari and iOS Devices. ',
-    tags: [ 'navigator', 'Web API', 'chrome', 'animation' ]
+    tags: [ 'javascript', 'animation' ]
+  },
+  {
+    url: '/posts/computedStyleMap',
+    title: 'computedStyleMap',
+    description:
+      'Access all the CSS properties and values — including custom properties — that are impacting an element',
+    content: '',
+    tags: ['css']
   },
   {
     url: '/posts/event-delegation-menu',
@@ -22,7 +30,7 @@ const _routes = [
       'Event delegation handler reads the attribute and executes method on call',
     content:
       ' > Note that `this.onClick` is bound to this in `(*)`. That’s important, because otherwise this inside it would reference the DOM element (elem), not the Menu object, and this[action] would not be what we need.',
-    tags: [ 'events', 'event delegation' ]
+    tags: ['events']
   },
   {
     url: '/posts/exportPathMap',
@@ -37,14 +45,14 @@ const _routes = [
     title: 'iframe blob',
     description: 'Blob as HTML for iFrame',
     content: '',
-    tags: [ 'iframe', 'blob' ]
+    tags: ['iframe']
   },
   {
     url: '/posts/mouse-canvas',
     title: 'Mouse Canvas',
     description: 'Cursor like canvas tracking mouse position',
     content: '',
-    tags: [ 'canvas', 'game', 'MouseEvent', 'events' ]
+    tags: [ 'canvas', 'game', 'events' ]
   },
   {
     url: '/posts/semi-circle-donut-chart',
@@ -57,9 +65,9 @@ const _routes = [
   {
     url: '/posts/simple-modal',
     title: 'Simple Modal',
-    description: 'A simple popup modal using only CSS and HTML using :target',
+    description: 'A simple popup modal using only CSS and HTML using `:target`',
     content:
       'Adapted from @peiche\'s [codepen](https://codepen.io/peiche/pen/vhqym) > A popup window/modal window experiment based on the `:target` pseudoclass. > * The first popup stays open until you click the "X" to close.  > * The second will close when you click anywhere outside the popup.  ',
-    tags: [ 'modal', 'noJS', 'component' ]
+    tags: ['component']
   }
 ];

@@ -1,0 +1,349 @@
+[
+  {
+    "path": "content/CSS-HSL-color-theme.md",
+    "url": "posts/CSS-HSL-color-theme",
+    "content": "```html\n<h2>\n  <input type=\"color\" value=\"#724AFF\" id=\"base-color-input\"/>\n  <label>select base color</label>\n</h2>\n<div class=\"box-container\">\n  <div class=\"box base\"><p>base</p></div>\n  <div class=\"box base-light\"><p>light<p/></div>\n  <div class=\"box base-dark\"><p>dark</p></div>\n  <div class=\"box base-complement\"><p>complement</p></div>\n  <div class=\"box base-triad-1\"><p>triad 1</p></div>\n  <div class=\"box base-triad-2\"><p>triad 2</p></div>\n</div>\n```\n\n```css\n:root {\n  --h: 253;\n  --s: 100%;\n  --l: 50%;\n\n  --contrastThreshold: 60%;\n  --lightnessTransform: 10;\n  --darknessTransform: 20;\n\n  --darker: calc((100 - var(--darknessTransform)) / 100);\n  --lighter: calc((100 + var(--lightnessTransform)) / 100);\n\n  --light-l: calc(var(--l) * var(--lighter));\n  --dark-l: calc(var(--l) * var(--darker));\n\n  --base: hsl(var(--h), var(--s), var(--l));\n  --dark: hsl(var(--h), var(--s), var(--dark-l));\n  --light: hsl(var(--h), var(--s), var(--light-l));\n\n  --complement: hsl(calc(var(--h) + 180), var(--s), var(--l));\n  --triad-1: hsl(calc(var(--h) + 120), var(--s), var(--l));\n  --triad-2: hsl(calc(var(--h) - 120), var(--s), var(--l));\n}\n.box {\n  --color: var(--base);\n  --switch: calc((var(--l) - var(--contrastThreshold)) * -100);\n  background: var(--color);\n  color: hsl(0, 0%, var(--switch));\n}\n.base {\n  --color: var(--base);\n}\n.base-light {\n  --color: var(--light);\n  --l: var(--light-l);\n}\n.base-dark {\n  --color: var(--dark);\n  --l: var(--dark-l);\n}\n.base-complement {\n  --color: var(--complement);\n}\n.base-triad-1 {\n  --color: var(--triad-1);\n}\n.base-triad-2 {\n  --color: var(--triad-2);\n}\n::-webkit-color-swatch-wrapper {\n  padding: 0;\n}\n::-webkit-color-swatch {\n  border: none;\n}\n```\n\n```js\nfunction setTheme(H, inputType) {\n  // Convert hex to RGB first\n  let r = 0, g = 0, b = 0\n  if (H.length == 4) {\n    r = '0x' + H[1] + H[1]\n    g = '0x' + H[2] + H[2]\n    b = '0x' + H[3] + H[3]\n  } else if (H.length == 7) {\n    r = '0x' + H[1] + H[2]\n    g = '0x' + H[3] + H[4]\n    b = '0x' + H[5] + H[6]\n  }\n  // Then to HSL\n  r /= 255\n  g /= 255\n  b /= 255\n\n  let cmin = Math.min(r, g, b),\n    cmax = Math.max(r, g, b),\n    delta = cmax - cmin,\n    h = 0, s = 0, l = 0\n\n  if (delta == 0) { h = 0 } \n  else if (cmax == r) { h = ((g - b) / delta) % 6 } \n  else if (cmax == g) { h = (b - r) / delta + 2 } \n  else { h = (r - g) / delta + 4 }\n\n  h = Math.round(h * 60)\n\n  if (h < 0) { h += 360 }\n\n  l = (cmax + cmin) / 2\n  s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1))\n  s = +(s * 100).toFixed(1)\n  l = +(l * 100).toFixed(1)\n\n  document.documentElement.style.setProperty('--h', h)\n  document.documentElement.style.setProperty('--s', s + '%')\n  document.documentElement.style.setProperty('--l', l + '%')\n}\n\ndocument.querySelector('#base-color-input').addEventListener('change', e => {\n  setTheme(e.target.value, 'base')\n})\n```\n\n```css\nbody {font-family:sans-serif; flex-direction:column; justify-content:center; align-items:center; align-content:center; font-family:sans-serif;  width:100vw; height:100vh; font-size:15px; display:flex; align-content: space-around;}\n* {box-sizing:border-box}\ninput[type=\"color\"]{ font-size: 100%; line-height: 1.15; margin: 1rem auto; width: 80%; display: flex; border: 2px solid black}\n.color-container{ border:1px solid #eee}\n.box-container {display:flex; flex-wrap:wrap; width:100%; justify-content:center; }\n.box:after {content:''; height:15px; width:15px; background:var(--base); position:absolute; right:1px; bottom:1px; z-index:2; border-radius:100%}\n.box {overflow:hidden; height:calc(100vw / 10); overflow:hidden; width:calc(100vw / 10); min-width:100px; min-height:100px; position:relative; display:flex; justify-content:center; align-items:center; margin:0.25rem; border-radius:5px; text-align:center; box-shadow:0 0 4px 2px rgba(0, 0, 0, 0.15)}\n```",
+    "html": "<pre data-lang=\"html\"><code class=\"language-html\">&lt;h2&gt;\n  &lt;input type=&quot;color&quot; value=&quot;#724AFF&quot; id=&quot;base-color-input&quot;/&gt;\n  &lt;label&gt;select base color&lt;/label&gt;\n&lt;/h2&gt;\n&lt;div class=&quot;box-container&quot;&gt;\n  &lt;div class=&quot;box base&quot;&gt;&lt;p&gt;base&lt;/p&gt;&lt;/div&gt;\n  &lt;div class=&quot;box base-light&quot;&gt;&lt;p&gt;light&lt;p/&gt;&lt;/div&gt;\n  &lt;div class=&quot;box base-dark&quot;&gt;&lt;p&gt;dark&lt;/p&gt;&lt;/div&gt;\n  &lt;div class=&quot;box base-complement&quot;&gt;&lt;p&gt;complement&lt;/p&gt;&lt;/div&gt;\n  &lt;div class=&quot;box base-triad-1&quot;&gt;&lt;p&gt;triad 1&lt;/p&gt;&lt;/div&gt;\n  &lt;div class=&quot;box base-triad-2&quot;&gt;&lt;p&gt;triad 2&lt;/p&gt;&lt;/div&gt;\n&lt;/div&gt;</code></pre>\n<pre data-lang=\"css\"><code class=\"language-css\">:root {\n  --h: 253;\n  --s: 100%;\n  --l: 50%;\n\n  --contrastThreshold: 60%;\n  --lightnessTransform: 10;\n  --darknessTransform: 20;\n\n  --darker: calc((100 - var(--darknessTransform)) / 100);\n  --lighter: calc((100 + var(--lightnessTransform)) / 100);\n\n  --light-l: calc(var(--l) * var(--lighter));\n  --dark-l: calc(var(--l) * var(--darker));\n\n  --base: hsl(var(--h), var(--s), var(--l));\n  --dark: hsl(var(--h), var(--s), var(--dark-l));\n  --light: hsl(var(--h), var(--s), var(--light-l));\n\n  --complement: hsl(calc(var(--h) + 180), var(--s), var(--l));\n  --triad-1: hsl(calc(var(--h) + 120), var(--s), var(--l));\n  --triad-2: hsl(calc(var(--h) - 120), var(--s), var(--l));\n}\n.box {\n  --color: var(--base);\n  --switch: calc((var(--l) - var(--contrastThreshold)) * -100);\n  background: var(--color);\n  color: hsl(0, 0%, var(--switch));\n}\n.base {\n  --color: var(--base);\n}\n.base-light {\n  --color: var(--light);\n  --l: var(--light-l);\n}\n.base-dark {\n  --color: var(--dark);\n  --l: var(--dark-l);\n}\n.base-complement {\n  --color: var(--complement);\n}\n.base-triad-1 {\n  --color: var(--triad-1);\n}\n.base-triad-2 {\n  --color: var(--triad-2);\n}\n::-webkit-color-swatch-wrapper {\n  padding: 0;\n}\n::-webkit-color-swatch {\n  border: none;\n}</code></pre>\n<pre data-lang=\"js\"><code class=\"language-js\">function setTheme(H, inputType) {\n  // Convert hex to RGB first\n  let r = 0, g = 0, b = 0\n  if (H.length == 4) {\n    r = &#39;0x&#39; + H[1] + H[1]\n    g = &#39;0x&#39; + H[2] + H[2]\n    b = &#39;0x&#39; + H[3] + H[3]\n  } else if (H.length == 7) {\n    r = &#39;0x&#39; + H[1] + H[2]\n    g = &#39;0x&#39; + H[3] + H[4]\n    b = &#39;0x&#39; + H[5] + H[6]\n  }\n  // Then to HSL\n  r /= 255\n  g /= 255\n  b /= 255\n\n  let cmin = Math.min(r, g, b),\n    cmax = Math.max(r, g, b),\n    delta = cmax - cmin,\n    h = 0, s = 0, l = 0\n\n  if (delta == 0) { h = 0 } \n  else if (cmax == r) { h = ((g - b) / delta) % 6 } \n  else if (cmax == g) { h = (b - r) / delta + 2 } \n  else { h = (r - g) / delta + 4 }\n\n  h = Math.round(h * 60)\n\n  if (h &lt; 0) { h += 360 }\n\n  l = (cmax + cmin) / 2\n  s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1))\n  s = +(s * 100).toFixed(1)\n  l = +(l * 100).toFixed(1)\n\n  document.documentElement.style.setProperty(&#39;--h&#39;, h)\n  document.documentElement.style.setProperty(&#39;--s&#39;, s + &#39;%&#39;)\n  document.documentElement.style.setProperty(&#39;--l&#39;, l + &#39;%&#39;)\n}\n\ndocument.querySelector(&#39;#base-color-input&#39;).addEventListener(&#39;change&#39;, e =&gt; {\n  setTheme(e.target.value, &#39;base&#39;)\n})</code></pre>\n<pre data-lang=\"css\"><code class=\"language-css\">body {font-family:sans-serif; flex-direction:column; justify-content:center; align-items:center; align-content:center; font-family:sans-serif;  width:100vw; height:100vh; font-size:15px; display:flex; align-content: space-around;}\n* {box-sizing:border-box}\ninput[type=&quot;color&quot;]{ font-size: 100%; line-height: 1.15; margin: 1rem auto; width: 80%; display: flex; border: 2px solid black}\n.color-container{ border:1px solid #eee}\n.box-container {display:flex; flex-wrap:wrap; width:100%; justify-content:center; }\n.box:after {content:&#39;&#39;; height:15px; width:15px; background:var(--base); position:absolute; right:1px; bottom:1px; z-index:2; border-radius:100%}\n.box {overflow:hidden; height:calc(100vw / 10); overflow:hidden; width:calc(100vw / 10); min-width:100px; min-height:100px; position:relative; display:flex; justify-content:center; align-items:center; margin:0.25rem; border-radius:5px; text-align:center; box-shadow:0 0 4px 2px rgba(0, 0, 0, 0.15)}</code></pre>\n",
+    "lines": 129,
+    "source": [
+      {
+        "lang": "html",
+        "value": "<h2>\n  <input type=\"color\" value=\"#724AFF\" id=\"base-color-input\"/>\n  <label>select base color</label>\n</h2>\n<div class=\"box-container\">\n  <div class=\"box base\"><p>base</p></div>\n  <div class=\"box base-light\"><p>light<p/></div>\n  <div class=\"box base-dark\"><p>dark</p></div>\n  <div class=\"box base-complement\"><p>complement</p></div>\n  <div class=\"box base-triad-1\"><p>triad 1</p></div>\n  <div class=\"box base-triad-2\"><p>triad 2</p></div>\n</div>"
+      },
+      {
+        "lang": "css",
+        "value": ":root {\n  --h: 253;\n  --s: 100%;\n  --l: 50%;\n\n  --contrastThreshold: 60%;\n  --lightnessTransform: 10;\n  --darknessTransform: 20;\n\n  --darker: calc((100 - var(--darknessTransform)) / 100);\n  --lighter: calc((100 + var(--lightnessTransform)) / 100);\n\n  --light-l: calc(var(--l) * var(--lighter));\n  --dark-l: calc(var(--l) * var(--darker));\n\n  --base: hsl(var(--h), var(--s), var(--l));\n  --dark: hsl(var(--h), var(--s), var(--dark-l));\n  --light: hsl(var(--h), var(--s), var(--light-l));\n\n  --complement: hsl(calc(var(--h) + 180), var(--s), var(--l));\n  --triad-1: hsl(calc(var(--h) + 120), var(--s), var(--l));\n  --triad-2: hsl(calc(var(--h) - 120), var(--s), var(--l));\n}\n.box {\n  --color: var(--base);\n  --switch: calc((var(--l) - var(--contrastThreshold)) * -100);\n  background: var(--color);\n  color: hsl(0, 0%, var(--switch));\n}\n.base {\n  --color: var(--base);\n}\n.base-light {\n  --color: var(--light);\n  --l: var(--light-l);\n}\n.base-dark {\n  --color: var(--dark);\n  --l: var(--dark-l);\n}\n.base-complement {\n  --color: var(--complement);\n}\n.base-triad-1 {\n  --color: var(--triad-1);\n}\n.base-triad-2 {\n  --color: var(--triad-2);\n}\n::-webkit-color-swatch-wrapper {\n  padding: 0;\n}\n::-webkit-color-swatch {\n  border: none;\n}"
+      },
+      {
+        "lang": "js",
+        "value": "function setTheme(H, inputType) {\n  // Convert hex to RGB first\n  let r = 0, g = 0, b = 0\n  if (H.length == 4) {\n    r = '0x' + H[1] + H[1]\n    g = '0x' + H[2] + H[2]\n    b = '0x' + H[3] + H[3]\n  } else if (H.length == 7) {\n    r = '0x' + H[1] + H[2]\n    g = '0x' + H[3] + H[4]\n    b = '0x' + H[5] + H[6]\n  }\n  // Then to HSL\n  r /= 255\n  g /= 255\n  b /= 255\n\n  let cmin = Math.min(r, g, b),\n    cmax = Math.max(r, g, b),\n    delta = cmax - cmin,\n    h = 0, s = 0, l = 0\n\n  if (delta == 0) { h = 0 } \n  else if (cmax == r) { h = ((g - b) / delta) % 6 } \n  else if (cmax == g) { h = (b - r) / delta + 2 } \n  else { h = (r - g) / delta + 4 }\n\n  h = Math.round(h * 60)\n\n  if (h < 0) { h += 360 }\n\n  l = (cmax + cmin) / 2\n  s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1))\n  s = +(s * 100).toFixed(1)\n  l = +(l * 100).toFixed(1)\n\n  document.documentElement.style.setProperty('--h', h)\n  document.documentElement.style.setProperty('--s', s + '%')\n  document.documentElement.style.setProperty('--l', l + '%')\n}\n\ndocument.querySelector('#base-color-input').addEventListener('change', e => {\n  setTheme(e.target.value, 'base')\n})"
+      },
+      {
+        "lang": "css",
+        "value": "body {font-family:sans-serif; flex-direction:column; justify-content:center; align-items:center; align-content:center; font-family:sans-serif;  width:100vw; height:100vh; font-size:15px; display:flex; align-content: space-around;}\n* {box-sizing:border-box}\ninput[type=\"color\"]{ font-size: 100%; line-height: 1.15; margin: 1rem auto; width: 80%; display: flex; border: 2px solid black}\n.color-container{ border:1px solid #eee}\n.box-container {display:flex; flex-wrap:wrap; width:100%; justify-content:center; }\n.box:after {content:''; height:15px; width:15px; background:var(--base); position:absolute; right:1px; bottom:1px; z-index:2; border-radius:100%}\n.box {overflow:hidden; height:calc(100vw / 10); overflow:hidden; width:calc(100vw / 10); min-width:100px; min-height:100px; position:relative; display:flex; justify-content:center; align-items:center; margin:0.25rem; border-radius:5px; text-align:center; box-shadow:0 0 4px 2px rgba(0, 0, 0, 0.15)}"
+      }
+    ],
+    "frontmatter": {
+      "title": "CSS HSL Color Theme",
+      "description": "calculating colors using HSL",
+      "tags": [
+        "color",
+        "css"
+      ],
+      "sources": [
+        "https://codepen.io/una/pen/VJMBbx",
+        "https://una.im/css-color-theming/"
+      ],
+      "references": [
+        "http://tallys.github.io/color-theory/",
+        "https://dev.to/benjaminadk/make-color-math-great-again--45of",
+        "https://tsh.io/blog/why-should-you-use-hsl-color-representation-in-css/"
+      ],
+      "preview": true,
+      "codepen": false,
+      "created": "3/5/2020, 11:32:49 AM"
+    },
+    "stat": {
+      "size": 4250,
+      "created": "2020-03-05T17:32:49.057Z",
+      "modified": "2020-03-11T10:41:02.786Z"
+    }
+  },
+  {
+    "path": "content/battery-api.md",
+    "url": "posts/battery-api",
+    "content": "This pen uses the Battery Status API, which is deprecated, and does not work for Safari and iOS Devices.\n\n```html\n<div class=\"battery\">\n  <div class=\"base\"></div>\n  <div class=\"before\"></div>\n  <div class=\"after\"></div>\n</div>\n```\n\n```css\nbody {\n  font-family: sans-serif;\n  background: white;\n  color: #d6deeb;\n  display: flex;\n  align-items: center;\n  align-content: center;\n}\n.battery {\n  position: relative;\n  margin: 0 auto;\n  width: calc(100vw / 6);\n  color: rgb(0, 255, 109);\n  border: calc(100vw / 120) solid currentColor;\n  height: calc(90vw / 12.25);\n  border-radius: calc(100vw / 100);\n}\n.battery:after {\n  content: attr(data-battery-life);\n  color: currentColor;\n  position: absolute;\n  bottom: 0;\n  z-index: 3;\n  margin-bottom: -30px;\n  font-size: 12px;\n}\n.base {\n  height: 110%;\n  left: -1px;\n  top: -1px;\n  background: currentColor;\n  position: absolute;\n  z-index: -1;\n  padding: 0.5px 0;\n}\n.before {\n  position: absolute;\n  height: 110%;\n  left: -1px;\n  top: -1px;\n  padding: 0.5px 0;\n  background: currentColor;\n  opacity: 0.46;\n  z-index: -3;\n  animation-direction: alternate-reverse;\n}\n.after {\n  position: absolute;\n  margin-right: calc(100vw / calc(13.5 * -3));\n  right: 0;\n  top: calc(50vw / 30);\n  width: calc(100vw / 90);\n  height: calc(100vw / 25);\n  background: currentColor;\n  border-bottom-right-radius: calc(90vw / 150);\n  border-top-right-radius: calc(90vw / 150);\n}\n.charging {\n  animation: full 3500ms linear infinite;\n}\n.low-battery {\n  color: red;\n}\n@keyframes full {\n  0% {\n    width: 0%;\n  }\n  25% {\n    width: 25%;\n  }\n  50% {\n    width: 50%;\n  }\n  75% {\n    width: 75%;\n  }\n  100% {\n    width: 105%;\n  }\n}\n```\n\n```js\nvar $ = element => query => element.querySelector(query) || element\nvar $battery = $(document.querySelector('.battery'))\n\nfunction updateBatteryStatus(battery) {\n  $battery('.base').style.width = `${Number.parseInt(battery.level * 100)}%`\n  $battery().dataset.batteryLife = `${Number.parseInt(battery.level * 100)}%`\n\n  if (battery.level < 0.25) {\n    $battery().classList.add('low-battery')\n  }\n  if (battery.charging) {\n    $battery('.before').classList.add('charging')\n  } else {\n    $battery('.before').classList.remove('charging')\n  }\n}\n\nnavigator.getBattery().then(battery => {\n  updateBatteryStatus(battery)\n\n  battery.onlevelchange = function() {\n    updateBatteryStatus(battery)\n    if (battery.level > 0.2) {\n      $battery().classList.remove('low-battery')\n    }\n  }\n  battery.onchargingchange = function() {\n    updateBatteryStatus(battery)\n  }\n})\n```\n",
+    "html": "<p>This pen uses the Battery Status API, which is deprecated, and does not work for Safari and iOS Devices.</p>\n<pre data-lang=\"html\"><code class=\"language-html\">&lt;div class=&quot;battery&quot;&gt;\n  &lt;div class=&quot;base&quot;&gt;&lt;/div&gt;\n  &lt;div class=&quot;before&quot;&gt;&lt;/div&gt;\n  &lt;div class=&quot;after&quot;&gt;&lt;/div&gt;\n&lt;/div&gt;</code></pre>\n<pre data-lang=\"css\"><code class=\"language-css\">body {\n  font-family: sans-serif;\n  background: white;\n  color: #d6deeb;\n  display: flex;\n  align-items: center;\n  align-content: center;\n}\n.battery {\n  position: relative;\n  margin: 0 auto;\n  width: calc(100vw / 6);\n  color: rgb(0, 255, 109);\n  border: calc(100vw / 120) solid currentColor;\n  height: calc(90vw / 12.25);\n  border-radius: calc(100vw / 100);\n}\n.battery:after {\n  content: attr(data-battery-life);\n  color: currentColor;\n  position: absolute;\n  bottom: 0;\n  z-index: 3;\n  margin-bottom: -30px;\n  font-size: 12px;\n}\n.base {\n  height: 110%;\n  left: -1px;\n  top: -1px;\n  background: currentColor;\n  position: absolute;\n  z-index: -1;\n  padding: 0.5px 0;\n}\n.before {\n  position: absolute;\n  height: 110%;\n  left: -1px;\n  top: -1px;\n  padding: 0.5px 0;\n  background: currentColor;\n  opacity: 0.46;\n  z-index: -3;\n  animation-direction: alternate-reverse;\n}\n.after {\n  position: absolute;\n  margin-right: calc(100vw / calc(13.5 * -3));\n  right: 0;\n  top: calc(50vw / 30);\n  width: calc(100vw / 90);\n  height: calc(100vw / 25);\n  background: currentColor;\n  border-bottom-right-radius: calc(90vw / 150);\n  border-top-right-radius: calc(90vw / 150);\n}\n.charging {\n  animation: full 3500ms linear infinite;\n}\n.low-battery {\n  color: red;\n}\n@keyframes full {\n  0% {\n    width: 0%;\n  }\n  25% {\n    width: 25%;\n  }\n  50% {\n    width: 50%;\n  }\n  75% {\n    width: 75%;\n  }\n  100% {\n    width: 105%;\n  }\n}</code></pre>\n<pre data-lang=\"js\"><code class=\"language-js\">var $ = element =&gt; query =&gt; element.querySelector(query) || element\nvar $battery = $(document.querySelector(&#39;.battery&#39;))\n\nfunction updateBatteryStatus(battery) {\n  $battery(&#39;.base&#39;).style.width = `${Number.parseInt(battery.level * 100)}%`\n  $battery().dataset.batteryLife = `${Number.parseInt(battery.level * 100)}%`\n\n  if (battery.level &lt; 0.25) {\n    $battery().classList.add(&#39;low-battery&#39;)\n  }\n  if (battery.charging) {\n    $battery(&#39;.before&#39;).classList.add(&#39;charging&#39;)\n  } else {\n    $battery(&#39;.before&#39;).classList.remove(&#39;charging&#39;)\n  }\n}\n\nnavigator.getBattery().then(battery =&gt; {\n  updateBatteryStatus(battery)\n\n  battery.onlevelchange = function() {\n    updateBatteryStatus(battery)\n    if (battery.level &gt; 0.2) {\n      $battery().classList.remove(&#39;low-battery&#39;)\n    }\n  }\n  battery.onchargingchange = function() {\n    updateBatteryStatus(battery)\n  }\n})</code></pre>\n",
+    "lines": 126,
+    "source": [
+      {
+        "lang": "html",
+        "value": "<div class=\"battery\">\n  <div class=\"base\"></div>\n  <div class=\"before\"></div>\n  <div class=\"after\"></div>\n</div>"
+      },
+      {
+        "lang": "css",
+        "value": "body {\n  font-family: sans-serif;\n  background: white;\n  color: #d6deeb;\n  display: flex;\n  align-items: center;\n  align-content: center;\n}\n.battery {\n  position: relative;\n  margin: 0 auto;\n  width: calc(100vw / 6);\n  color: rgb(0, 255, 109);\n  border: calc(100vw / 120) solid currentColor;\n  height: calc(90vw / 12.25);\n  border-radius: calc(100vw / 100);\n}\n.battery:after {\n  content: attr(data-battery-life);\n  color: currentColor;\n  position: absolute;\n  bottom: 0;\n  z-index: 3;\n  margin-bottom: -30px;\n  font-size: 12px;\n}\n.base {\n  height: 110%;\n  left: -1px;\n  top: -1px;\n  background: currentColor;\n  position: absolute;\n  z-index: -1;\n  padding: 0.5px 0;\n}\n.before {\n  position: absolute;\n  height: 110%;\n  left: -1px;\n  top: -1px;\n  padding: 0.5px 0;\n  background: currentColor;\n  opacity: 0.46;\n  z-index: -3;\n  animation-direction: alternate-reverse;\n}\n.after {\n  position: absolute;\n  margin-right: calc(100vw / calc(13.5 * -3));\n  right: 0;\n  top: calc(50vw / 30);\n  width: calc(100vw / 90);\n  height: calc(100vw / 25);\n  background: currentColor;\n  border-bottom-right-radius: calc(90vw / 150);\n  border-top-right-radius: calc(90vw / 150);\n}\n.charging {\n  animation: full 3500ms linear infinite;\n}\n.low-battery {\n  color: red;\n}\n@keyframes full {\n  0% {\n    width: 0%;\n  }\n  25% {\n    width: 25%;\n  }\n  50% {\n    width: 50%;\n  }\n  75% {\n    width: 75%;\n  }\n  100% {\n    width: 105%;\n  }\n}"
+      },
+      {
+        "lang": "js",
+        "value": "var $ = element => query => element.querySelector(query) || element\nvar $battery = $(document.querySelector('.battery'))\n\nfunction updateBatteryStatus(battery) {\n  $battery('.base').style.width = `${Number.parseInt(battery.level * 100)}%`\n  $battery().dataset.batteryLife = `${Number.parseInt(battery.level * 100)}%`\n\n  if (battery.level < 0.25) {\n    $battery().classList.add('low-battery')\n  }\n  if (battery.charging) {\n    $battery('.before').classList.add('charging')\n  } else {\n    $battery('.before').classList.remove('charging')\n  }\n}\n\nnavigator.getBattery().then(battery => {\n  updateBatteryStatus(battery)\n\n  battery.onlevelchange = function() {\n    updateBatteryStatus(battery)\n    if (battery.level > 0.2) {\n      $battery().classList.remove('low-battery')\n    }\n  }\n  battery.onchargingchange = function() {\n    updateBatteryStatus(battery)\n  }\n})"
+      }
+    ],
+    "frontmatter": {
+      "title": "Responsive Battery API",
+      "description": "For chrome and android devices: track device battery life using Battery Status API [deprecated]",
+      "tags": [
+        "javascript",
+        "animation"
+      ],
+      "codepen": true,
+      "codepen-slug": "oNXWWJq"
+    },
+    "stat": {
+      "size": 2742,
+      "created": "2020-02-28T19:25:27.523Z",
+      "modified": "2020-03-11T12:46:44.667Z"
+    }
+  },
+  {
+    "path": "content/computedStyleMap.md",
+    "url": "posts/computedStyleMap",
+    "content": "```html\n<p>\n   <a href=\"https://example.com\">Link</a>\n</p>\n<ul id=\"regurgitation\"></ul>\n```\n\n```css\np {\n  background: yellow\n}\n```\n\n```js\n// get the element\nconst myElement = document.querySelector('a');\n\n// get the <dl> we'll be populating\nconst stylesList = document.querySelector('#regurgitation');\n\n// Retrieve all computed styles with computedStyleMap()\nconst defaultComputedStyles = myElement.computedStyleMap();\n\n// iterate thru the map of all the properties and values, adding a <dt> and <dd> for each\nfor (const [prop, val] of defaultComputedStyles) {\n\tstylesList.appendChild( Object.assign(document.createElement('li'),{\n    textContent: [prop,val].join(': ')\n  }))\n}\n```",
+    "html": "<pre data-lang=\"html\"><code class=\"language-html\">&lt;p&gt;\n   &lt;a href=&quot;https://example.com&quot;&gt;Link&lt;/a&gt;\n&lt;/p&gt;\n&lt;ul id=&quot;regurgitation&quot;&gt;&lt;/ul&gt;</code></pre>\n<pre data-lang=\"css\"><code class=\"language-css\">p {\n  background: yellow\n}</code></pre>\n<pre data-lang=\"js\"><code class=\"language-js\">// get the element\nconst myElement = document.querySelector(&#39;a&#39;);\n\n// get the &lt;dl&gt; we&#39;ll be populating\nconst stylesList = document.querySelector(&#39;#regurgitation&#39;);\n\n// Retrieve all computed styles with computedStyleMap()\nconst defaultComputedStyles = myElement.computedStyleMap();\n\n// iterate thru the map of all the properties and values, adding a &lt;dt&gt; and &lt;dd&gt; for each\nfor (const [prop, val] of defaultComputedStyles) {\n    stylesList.appendChild( Object.assign(document.createElement(&#39;li&#39;),{\n    textContent: [prop,val].join(&#39;: &#39;)\n  }))\n}</code></pre>\n",
+    "lines": 30,
+    "source": [
+      {
+        "lang": "html",
+        "value": "<p>\n   <a href=\"https://example.com\">Link</a>\n</p>\n<ul id=\"regurgitation\"></ul>"
+      },
+      {
+        "lang": "css",
+        "value": "p {\n  background: yellow\n}"
+      },
+      {
+        "lang": "js",
+        "value": "// get the element\nconst myElement = document.querySelector('a');\n\n// get the <dl> we'll be populating\nconst stylesList = document.querySelector('#regurgitation');\n\n// Retrieve all computed styles with computedStyleMap()\nconst defaultComputedStyles = myElement.computedStyleMap();\n\n// iterate thru the map of all the properties and values, adding a <dt> and <dd> for each\nfor (const [prop, val] of defaultComputedStyles) {\n\tstylesList.appendChild( Object.assign(document.createElement('li'),{\n    textContent: [prop,val].join(': ')\n  }))\n}"
+      }
+    ],
+    "frontmatter": {
+      "title": "computedStyleMap",
+      "description": "Access all the CSS properties and values — including custom properties — that are impacting an element",
+      "tags": [
+        "css"
+      ],
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/CSS_Typed_OM_API/Guide"
+      ],
+      "references": [],
+      "preview": true,
+      "created": "3/10/2020, 5:49:38 PM"
+    },
+    "stat": {
+      "size": 993,
+      "created": "2020-03-10T22:49:38.283Z",
+      "modified": "2020-03-11T12:47:37.482Z"
+    }
+  },
+  {
+    "path": "content/event-delegation-menu.md",
+    "url": "posts/event-delegation-menu",
+    "content": "```html\n<div id=\"menu\">\n  <button data-action=\"save\">Save</button>\n  <button data-action=\"load\">Load</button>\n  <button data-action=\"search\">Search</button>\n</div>\n```\n\n```js\nclass Menu {\n  constructor(elem) {\n    this._elem = elem;\n    elem.onclick = this.onClick.bind(this); // (*)\n  }\n\n  save() {\n    alert('saving');\n  }\n\n  load() {\n    alert('loading');\n  }\n\n  search() {\n    alert('searching');\n  }\n\n  onClick(event) {\n    let action = event.target.dataset.action;\n    if (action) {\n      this[action]();\n    }\n  };\n}\n\nnew Menu(menu);\n```\n\n> Note that `this.onClick` is bound to this in `(*)`. That’s important, because otherwise this inside it would reference the DOM element (elem), not the Menu object, and this[action] would not be what we need.\n",
+    "html": "<pre data-lang=\"html\"><code class=\"language-html\">&lt;div id=&quot;menu&quot;&gt;\n  &lt;button data-action=&quot;save&quot;&gt;Save&lt;/button&gt;\n  &lt;button data-action=&quot;load&quot;&gt;Load&lt;/button&gt;\n  &lt;button data-action=&quot;search&quot;&gt;Search&lt;/button&gt;\n&lt;/div&gt;</code></pre>\n<pre data-lang=\"js\"><code class=\"language-js\">class Menu {\n  constructor(elem) {\n    this._elem = elem;\n    elem.onclick = this.onClick.bind(this); // (*)\n  }\n\n  save() {\n    alert(&#39;saving&#39;);\n  }\n\n  load() {\n    alert(&#39;loading&#39;);\n  }\n\n  search() {\n    alert(&#39;searching&#39;);\n  }\n\n  onClick(event) {\n    let action = event.target.dataset.action;\n    if (action) {\n      this[action]();\n    }\n  };\n}\n\nnew Menu(menu);</code></pre>\n<blockquote>\n<p>Note that <code>this.onClick</code> is bound to this in <code>(*)</code>. That’s important, because otherwise this inside it would reference the DOM element (elem), not the Menu object, and this[action] would not be what we need.</p>\n</blockquote>\n",
+    "lines": 40,
+    "source": [
+      {
+        "lang": "html",
+        "value": "<div id=\"menu\">\n  <button data-action=\"save\">Save</button>\n  <button data-action=\"load\">Load</button>\n  <button data-action=\"search\">Search</button>\n</div>"
+      },
+      {
+        "lang": "js",
+        "value": "class Menu {\n  constructor(elem) {\n    this._elem = elem;\n    elem.onclick = this.onClick.bind(this); // (*)\n  }\n\n  save() {\n    alert('saving');\n  }\n\n  load() {\n    alert('loading');\n  }\n\n  search() {\n    alert('searching');\n  }\n\n  onClick(event) {\n    let action = event.target.dataset.action;\n    if (action) {\n      this[action]();\n    }\n  };\n}\n\nnew Menu(menu);"
+      }
+    ],
+    "frontmatter": {
+      "title": "Event Delegation Menu",
+      "description": "Event delegation handler reads the attribute and executes method on call",
+      "tags": [
+        "events"
+      ],
+      "sources": [
+        "https://javascript.info/event-delegation"
+      ],
+      "references": [],
+      "preview": true,
+      "previewHeight": "100px",
+      "created": "3/5/2020, 4:58:07 PM"
+    },
+    "stat": {
+      "size": 1037,
+      "created": "2020-03-05T22:58:07.092Z",
+      "modified": "2020-03-11T12:48:01.682Z"
+    }
+  },
+  {
+    "path": "content/exportPathMap.md",
+    "url": "posts/exportPathMap",
+    "content": "> This feature is exclusive of `next export`. Please refer to [Static HTML export](https://nextjs.org/docs/advanced-features/static-html-export) if you want to learn more about it.\n\nLet's start with an example, to create a custom `exportPathMap` for an app with the following pages:\n\n- `pages/index.js`\n- `pages/about.js`\n- `pages/post.js`\n\nOpen `next.config.js` and add the following `exportPathMap` config:\n\n```js\nmodule.exports = {\n  exportPathMap: async function(defaultPathMap, { dev, dir, outDir, distDir, buildId }) {\n    return {\n      '/': { page: '/' },\n      '/about': { page: '/about' },\n      '/p/hello-nextjs': { page: '/post', query: { title: 'hello-nextjs' } },\n      '/p/learn-nextjs': { page: '/post', query: { title: 'learn-nextjs' } },\n      '/p/deploy-nextjs': { page: '/post', query: { title: 'deploy-nextjs' } }\n    }\n  }\n}\n```\n\nThe pages will then be exported as HTML files, for example, `/about` will become `/about.html`.\n\n`exportPathMap` is an `async` function that receives 2 arguments: the first one is `defaultPathMap`, which is the default map used by Next.js. The second argument is an object with:\n\n- `dev` - `true` when `exportPathMap` is being called in development. `false` when running `next export`. In development `exportPathMap` is used to define routes.\n- `dir` - Absolute path to the project directory\n- `outDir` - Absolute path to the `out/` directory (configurable with `-o`). When `dev` is `true` the value of `outDir` will be `null`.\n- `distDir` - Absolute path to the `.next/` directory (configurable with the [`distDir`](https://nextjs.org/docs/api-reference/next.config.js/setting-a-custom-build-directory) config)\n- `buildId` - The generated build id\n\nThe returned object is a map of pages where the `key` is the `pathname` and the `value` is an object that accepts the following fields:\n\n- `page`: `String` - the page inside the `pages` directory to render\n- `query`: `Object` - the `query` object passed to `getInitialProps` when prerendering. Defaults to `{}`\n\n> The exported `pathname` can also be a filename (for example, `/readme.md`), but you may need to set the `Content-Type` header to `text/html` when serving its content if it is different than `.html`.\n\n## [Adding a trailing slash](https://nextjs.org/docs/api-reference/next.config.js/exportPathMap#adding-a-trailing-slash)\n\nIt is possible to configure Next.js to export pages as `index.html` files and require trailing slashes, `/about` becomes `/about/index.html` and is routable via `/about/`. This was the default behavior prior to Next.js 9.\n\nTo switch back and add a trailing slash, open `next.config.js` and enable the `exportTrailingSlash` config:\n\n```js\nmodule.exports = {\n  exportTrailingSlash: true\n}\n```\n",
+    "html": "<blockquote>\n<p>This feature is exclusive of <code>next export</code>. Please refer to <a href=\"https://nextjs.org/docs/advanced-features/static-html-export\">Static HTML export</a> if you want to learn more about it.</p>\n</blockquote>\n<p>Let&#39;s start with an example, to create a custom <code>exportPathMap</code> for an app with the following pages:</p>\n<ul>\n<li><code>pages/index.js</code></li>\n<li><code>pages/about.js</code></li>\n<li><code>pages/post.js</code></li>\n</ul>\n<p>Open <code>next.config.js</code> and add the following <code>exportPathMap</code> config:</p>\n<pre data-lang=\"js\"><code class=\"language-js\">module.exports = {\n  exportPathMap: async function(defaultPathMap, { dev, dir, outDir, distDir, buildId }) {\n    return {\n      &#39;/&#39;: { page: &#39;/&#39; },\n      &#39;/about&#39;: { page: &#39;/about&#39; },\n      &#39;/p/hello-nextjs&#39;: { page: &#39;/post&#39;, query: { title: &#39;hello-nextjs&#39; } },\n      &#39;/p/learn-nextjs&#39;: { page: &#39;/post&#39;, query: { title: &#39;learn-nextjs&#39; } },\n      &#39;/p/deploy-nextjs&#39;: { page: &#39;/post&#39;, query: { title: &#39;deploy-nextjs&#39; } }\n    }\n  }\n}</code></pre>\n<p>The pages will then be exported as HTML files, for example, <code>/about</code> will become <code>/about.html</code>.</p>\n<p><code>exportPathMap</code> is an <code>async</code> function that receives 2 arguments: the first one is <code>defaultPathMap</code>, which is the default map used by Next.js. The second argument is an object with:</p>\n<ul>\n<li><code>dev</code> - <code>true</code> when <code>exportPathMap</code> is being called in development. <code>false</code> when running <code>next export</code>. In development <code>exportPathMap</code> is used to define routes.</li>\n<li><code>dir</code> - Absolute path to the project directory</li>\n<li><code>outDir</code> - Absolute path to the <code>out/</code> directory (configurable with <code>-o</code>). When <code>dev</code> is <code>true</code> the value of <code>outDir</code> will be <code>null</code>.</li>\n<li><code>distDir</code> - Absolute path to the <code>.next/</code> directory (configurable with the <a href=\"https://nextjs.org/docs/api-reference/next.config.js/setting-a-custom-build-directory\"><code>distDir</code></a> config)</li>\n<li><code>buildId</code> - The generated build id</li>\n</ul>\n<p>The returned object is a map of pages where the <code>key</code> is the <code>pathname</code> and the <code>value</code> is an object that accepts the following fields:</p>\n<ul>\n<li><code>page</code>: <code>String</code> - the page inside the <code>pages</code> directory to render</li>\n<li><code>query</code>: <code>Object</code> - the <code>query</code> object passed to <code>getInitialProps</code> when prerendering. Defaults to <code>{}</code></li>\n</ul>\n<blockquote>\n<p>The exported <code>pathname</code> can also be a filename (for example, <code>/readme.md</code>), but you may need to set the <code>Content-Type</code> header to <code>text/html</code> when serving its content if it is different than <code>.html</code>.</p>\n</blockquote>\n<h2 id=\"adding-a-trailing-slash\"><a href=\"https://nextjs.org/docs/api-reference/next.config.js/exportPathMap#adding-a-trailing-slash\">Adding a trailing slash</a></h2>\n<p>It is possible to configure Next.js to export pages as <code>index.html</code> files and require trailing slashes, <code>/about</code> becomes <code>/about/index.html</code> and is routable via <code>/about/</code>. This was the default behavior prior to Next.js 9.</p>\n<p>To switch back and add a trailing slash, open <code>next.config.js</code> and enable the <code>exportTrailingSlash</code> config:</p>\n<pre data-lang=\"js\"><code class=\"language-js\">module.exports = {\n  exportTrailingSlash: true\n}</code></pre>\n",
+    "lines": 53,
+    "source": [
+      {
+        "lang": "js",
+        "value": "module.exports = {\n  exportPathMap: async function(defaultPathMap, { dev, dir, outDir, distDir, buildId }) {\n    return {\n      '/': { page: '/' },\n      '/about': { page: '/about' },\n      '/p/hello-nextjs': { page: '/post', query: { title: 'hello-nextjs' } },\n      '/p/learn-nextjs': { page: '/post', query: { title: 'learn-nextjs' } },\n      '/p/deploy-nextjs': { page: '/post', query: { title: 'deploy-nextjs' } }\n    }\n  }\n}"
+      },
+      {
+        "lang": "js",
+        "value": "module.exports = {\n  exportTrailingSlash: true\n}"
+      }
+    ],
+    "frontmatter": {
+      "title": "exportPathMap",
+      "description": "A simple popup modal using only CSS and HTML",
+      "categories": [
+        "Notes"
+      ],
+      "tags": [
+        "nextjs",
+        "next",
+        "react"
+      ],
+      "codepen": false,
+      "references": [
+        "https://nextjs.org/docs/api-reference/next.config.js/exportPathMap"
+      ]
+    },
+    "stat": {
+      "size": 2974,
+      "created": "2020-03-01T05:24:40.196Z",
+      "modified": "2020-03-07T00:51:44.318Z"
+    }
+  },
+  {
+    "path": "content/iframe-blob.md",
+    "url": "posts/iframe-blob",
+    "content": "```html\n<h1>\n  IFrame Below uses blob as content\n</h1>\n<iframe></iframe>\n\n<p>\n  works in Chrome, Safari, Firefox. Used for\n  <a\n    href=\"http://webglfundamentals.org/webgl/lessons/webgl-animation.html\"\n    target=\"_blank\"\n    >a Codepen like editor without needing a server</a\n  >. PS: The link won't present editors in Edge because it can't work around this issue.\n  It will display editors in Firefox/Chrome/Safari\n</p>\n```\n\n```js\nvar html = `\n<style>\nbody { \n  background: blue; \n  color: white;\n}\n</style>\n<h1>This is Blob Content</h1>\n`\n\nvar blob = new Blob([html], { type: 'text/html' })\nvar iframe = document.querySelector('iframe')\niframe.src = URL.createObjectURL(blob)\n```\n",
+    "html": "<pre data-lang=\"html\"><code class=\"language-html\">&lt;h1&gt;\n  IFrame Below uses blob as content\n&lt;/h1&gt;\n&lt;iframe&gt;&lt;/iframe&gt;\n\n&lt;p&gt;\n  works in Chrome, Safari, Firefox. Used for\n  &lt;a\n    href=&quot;http://webglfundamentals.org/webgl/lessons/webgl-animation.html&quot;\n    target=&quot;_blank&quot;\n    &gt;a Codepen like editor without needing a server&lt;/a\n  &gt;. PS: The link won&#39;t present editors in Edge because it can&#39;t work around this issue.\n  It will display editors in Firefox/Chrome/Safari\n&lt;/p&gt;</code></pre>\n<pre data-lang=\"js\"><code class=\"language-js\">var html = `\n&lt;style&gt;\nbody { \n  background: blue; \n  color: white;\n}\n&lt;/style&gt;\n&lt;h1&gt;This is Blob Content&lt;/h1&gt;\n`\n\nvar blob = new Blob([html], { type: &#39;text/html&#39; })\nvar iframe = document.querySelector(&#39;iframe&#39;)\niframe.src = URL.createObjectURL(blob)</code></pre>\n",
+    "lines": 33,
+    "source": [
+      {
+        "lang": "html",
+        "value": "<h1>\n  IFrame Below uses blob as content\n</h1>\n<iframe></iframe>\n\n<p>\n  works in Chrome, Safari, Firefox. Used for\n  <a\n    href=\"http://webglfundamentals.org/webgl/lessons/webgl-animation.html\"\n    target=\"_blank\"\n    >a Codepen like editor without needing a server</a\n  >. PS: The link won't present editors in Edge because it can't work around this issue.\n  It will display editors in Firefox/Chrome/Safari\n</p>"
+      },
+      {
+        "lang": "js",
+        "value": "var html = `\n<style>\nbody { \n  background: blue; \n  color: white;\n}\n</style>\n<h1>This is Blob Content</h1>\n`\n\nvar blob = new Blob([html], { type: 'text/html' })\nvar iframe = document.querySelector('iframe')\niframe.src = URL.createObjectURL(blob)"
+      }
+    ],
+    "frontmatter": {
+      "title": "iframe blob",
+      "description": "Blob as HTML for iFrame",
+      "tags": [
+        "iframe"
+      ],
+      "preview": true,
+      "sources": [
+        "https://jsfiddle.net/greggman/r6mw8a9w/"
+      ]
+    },
+    "stat": {
+      "size": 837,
+      "created": "2020-03-03T00:23:23.463Z",
+      "modified": "2020-03-11T12:46:14.476Z"
+    }
+  },
+  {
+    "path": "content/mouse-canvas.md",
+    "url": "posts/mouse-canvas",
+    "content": "```html\n<canvas id=\"canvas\" width=\"100%\" height=\"100%\"></canvas>\n```\n\n```css\nhtml,\nbody {\n  margin: 0;\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n}\n```\n\n```js\nclass Player {\n  constructor(ctx, x, y) {\n    this.x = x\n    this.y = y\n    this.dest = { x: 0, y: 0 }\n    this.width = 200\n    this.height = 200\n    this.velocity = 30\n    this.angularVelocity = 7\n    this.rotation = 1.58\n    this.ctx = ctx\n    this.image = new Image()\n    this.image.src =\n      'https://habrastorage.org/files/447/9b4/6d3/4479b46d397e439a9613ce122a66a506.png'\n  }\n  draw() {\n    this.ctx.translate(this.x, this.y)\n    this.ctx.rotate(this.rotation + 4.7)\n    this.ctx.drawImage(\n      this.image,\n      -this.width / 2,\n      -this.height / 2,\n      this.width,\n      this.height\n    )\n    this.ctx.rotate(-this.rotation - 4.7)\n    this.ctx.translate(-this.x, -this.y)\n  }\n  distance(target) {\n    let data = { x: target.x - this.x, y: target.y - this.y }\n    data.len = Math.sqrt(data.x * data.x + data.y * data.y)\n    return data\n  }\n  rotate() {\n    let path = this.distance(this.dest)\n    let target = Math.atan2(path.y, path.x)\n    let delta = this.rotation - target\n    if (delta > 0.1 || delta < -0.1) {\n      let _delta = delta\n      if (_delta < 0) {\n        _delta += Math.PI * 2\n      }\n      if (delta < -Math.PI || (delta > 0 && delta < Math.PI)) {\n        this.rotation -= _delta / this.angularVelocity\n      } else {\n        this.rotation -= (_delta - Math.PI * 2) / this.angularVelocity\n      } // Reduce character rotation into the -PI thru PI range\n      this.rotation = ((this.rotation + 3 * Math.PI) % (2 * Math.PI)) - Math.PI\n    }\n  }\n  step() {\n    let distance = this.distance(this.dest).len\n    if (distance < this.width / 1.5) {\n      this.draw()\n      return\n    }\n    let vel = distance / 15\n    if (vel > this.velocity) {\n      vel = this.velocity\n    }\n    this.rotate()\n    this.x += vel * Math.cos(this.rotation)\n    this.y += vel * Math.sin(this.rotation)\n    this.draw()\n  }\n}\nfunction resizeCanvas() {\n  canvas.width = window.innerWidth * devicePixelRatio\n  canvas.height = window.innerHeight * devicePixelRatio\n}\nlet canvas, ctx, player\nfunction init() {\n  canvas = document.getElementById('canvas')\n  ctx = canvas.getContext('2d')\n  resizeCanvas()\n  const center = { x: canvas.width / 2, y: canvas.height / 2 - 10 }\n  player = new Player(ctx, center.x, center.y)\n  player.dest = center\n  window.onresize = resizeCanvas\n  canvas.onmousemove = mousemove\n  canvas.ontouchmove = mousemove\n  canvas.ontouchstart = mousemove\n  step()\n}\nfunction mousemove(e) {\n  e.preventDefault()\n  let clientX = e.clientX || e.touches[0].pageX\n  let clientY = e.clientY || e.touches[0].pageY\n  player.dest.x = clientX * devicePixelRatio\n  player.dest.y = clientY * devicePixelRatio\n}\nfunction step() {\n  ctx.clearRect(0, 0, canvas.width, canvas.height)\n  player.step()\n  requestAnimationFrame(step)\n}\ninit()\n```\n",
+    "html": "<pre data-lang=\"html\"><code class=\"language-html\">&lt;canvas id=&quot;canvas&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt;&lt;/canvas&gt;</code></pre>\n<pre data-lang=\"css\"><code class=\"language-css\">html,\nbody {\n  margin: 0;\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n}</code></pre>\n<pre data-lang=\"js\"><code class=\"language-js\">class Player {\n  constructor(ctx, x, y) {\n    this.x = x\n    this.y = y\n    this.dest = { x: 0, y: 0 }\n    this.width = 200\n    this.height = 200\n    this.velocity = 30\n    this.angularVelocity = 7\n    this.rotation = 1.58\n    this.ctx = ctx\n    this.image = new Image()\n    this.image.src =\n      &#39;https://habrastorage.org/files/447/9b4/6d3/4479b46d397e439a9613ce122a66a506.png&#39;\n  }\n  draw() {\n    this.ctx.translate(this.x, this.y)\n    this.ctx.rotate(this.rotation + 4.7)\n    this.ctx.drawImage(\n      this.image,\n      -this.width / 2,\n      -this.height / 2,\n      this.width,\n      this.height\n    )\n    this.ctx.rotate(-this.rotation - 4.7)\n    this.ctx.translate(-this.x, -this.y)\n  }\n  distance(target) {\n    let data = { x: target.x - this.x, y: target.y - this.y }\n    data.len = Math.sqrt(data.x * data.x + data.y * data.y)\n    return data\n  }\n  rotate() {\n    let path = this.distance(this.dest)\n    let target = Math.atan2(path.y, path.x)\n    let delta = this.rotation - target\n    if (delta &gt; 0.1 || delta &lt; -0.1) {\n      let _delta = delta\n      if (_delta &lt; 0) {\n        _delta += Math.PI * 2\n      }\n      if (delta &lt; -Math.PI || (delta &gt; 0 &amp;&amp; delta &lt; Math.PI)) {\n        this.rotation -= _delta / this.angularVelocity\n      } else {\n        this.rotation -= (_delta - Math.PI * 2) / this.angularVelocity\n      } // Reduce character rotation into the -PI thru PI range\n      this.rotation = ((this.rotation + 3 * Math.PI) % (2 * Math.PI)) - Math.PI\n    }\n  }\n  step() {\n    let distance = this.distance(this.dest).len\n    if (distance &lt; this.width / 1.5) {\n      this.draw()\n      return\n    }\n    let vel = distance / 15\n    if (vel &gt; this.velocity) {\n      vel = this.velocity\n    }\n    this.rotate()\n    this.x += vel * Math.cos(this.rotation)\n    this.y += vel * Math.sin(this.rotation)\n    this.draw()\n  }\n}\nfunction resizeCanvas() {\n  canvas.width = window.innerWidth * devicePixelRatio\n  canvas.height = window.innerHeight * devicePixelRatio\n}\nlet canvas, ctx, player\nfunction init() {\n  canvas = document.getElementById(&#39;canvas&#39;)\n  ctx = canvas.getContext(&#39;2d&#39;)\n  resizeCanvas()\n  const center = { x: canvas.width / 2, y: canvas.height / 2 - 10 }\n  player = new Player(ctx, center.x, center.y)\n  player.dest = center\n  window.onresize = resizeCanvas\n  canvas.onmousemove = mousemove\n  canvas.ontouchmove = mousemove\n  canvas.ontouchstart = mousemove\n  step()\n}\nfunction mousemove(e) {\n  e.preventDefault()\n  let clientX = e.clientX || e.touches[0].pageX\n  let clientY = e.clientY || e.touches[0].pageY\n  player.dest.x = clientX * devicePixelRatio\n  player.dest.y = clientY * devicePixelRatio\n}\nfunction step() {\n  ctx.clearRect(0, 0, canvas.width, canvas.height)\n  player.step()\n  requestAnimationFrame(step)\n}\ninit()</code></pre>\n",
+    "lines": 114,
+    "source": [
+      {
+        "lang": "html",
+        "value": "<canvas id=\"canvas\" width=\"100%\" height=\"100%\"></canvas>"
+      },
+      {
+        "lang": "css",
+        "value": "html,\nbody {\n  margin: 0;\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n}"
+      },
+      {
+        "lang": "js",
+        "value": "class Player {\n  constructor(ctx, x, y) {\n    this.x = x\n    this.y = y\n    this.dest = { x: 0, y: 0 }\n    this.width = 200\n    this.height = 200\n    this.velocity = 30\n    this.angularVelocity = 7\n    this.rotation = 1.58\n    this.ctx = ctx\n    this.image = new Image()\n    this.image.src =\n      'https://habrastorage.org/files/447/9b4/6d3/4479b46d397e439a9613ce122a66a506.png'\n  }\n  draw() {\n    this.ctx.translate(this.x, this.y)\n    this.ctx.rotate(this.rotation + 4.7)\n    this.ctx.drawImage(\n      this.image,\n      -this.width / 2,\n      -this.height / 2,\n      this.width,\n      this.height\n    )\n    this.ctx.rotate(-this.rotation - 4.7)\n    this.ctx.translate(-this.x, -this.y)\n  }\n  distance(target) {\n    let data = { x: target.x - this.x, y: target.y - this.y }\n    data.len = Math.sqrt(data.x * data.x + data.y * data.y)\n    return data\n  }\n  rotate() {\n    let path = this.distance(this.dest)\n    let target = Math.atan2(path.y, path.x)\n    let delta = this.rotation - target\n    if (delta > 0.1 || delta < -0.1) {\n      let _delta = delta\n      if (_delta < 0) {\n        _delta += Math.PI * 2\n      }\n      if (delta < -Math.PI || (delta > 0 && delta < Math.PI)) {\n        this.rotation -= _delta / this.angularVelocity\n      } else {\n        this.rotation -= (_delta - Math.PI * 2) / this.angularVelocity\n      } // Reduce character rotation into the -PI thru PI range\n      this.rotation = ((this.rotation + 3 * Math.PI) % (2 * Math.PI)) - Math.PI\n    }\n  }\n  step() {\n    let distance = this.distance(this.dest).len\n    if (distance < this.width / 1.5) {\n      this.draw()\n      return\n    }\n    let vel = distance / 15\n    if (vel > this.velocity) {\n      vel = this.velocity\n    }\n    this.rotate()\n    this.x += vel * Math.cos(this.rotation)\n    this.y += vel * Math.sin(this.rotation)\n    this.draw()\n  }\n}\nfunction resizeCanvas() {\n  canvas.width = window.innerWidth * devicePixelRatio\n  canvas.height = window.innerHeight * devicePixelRatio\n}\nlet canvas, ctx, player\nfunction init() {\n  canvas = document.getElementById('canvas')\n  ctx = canvas.getContext('2d')\n  resizeCanvas()\n  const center = { x: canvas.width / 2, y: canvas.height / 2 - 10 }\n  player = new Player(ctx, center.x, center.y)\n  player.dest = center\n  window.onresize = resizeCanvas\n  canvas.onmousemove = mousemove\n  canvas.ontouchmove = mousemove\n  canvas.ontouchstart = mousemove\n  step()\n}\nfunction mousemove(e) {\n  e.preventDefault()\n  let clientX = e.clientX || e.touches[0].pageX\n  let clientY = e.clientY || e.touches[0].pageY\n  player.dest.x = clientX * devicePixelRatio\n  player.dest.y = clientY * devicePixelRatio\n}\nfunction step() {\n  ctx.clearRect(0, 0, canvas.width, canvas.height)\n  player.step()\n  requestAnimationFrame(step)\n}\ninit()"
+      }
+    ],
+    "frontmatter": {
+      "title": "Mouse Canvas",
+      "description": "Cursor like canvas tracking mouse position",
+      "tags": [
+        "canvas",
+        "game",
+        "events"
+      ],
+      "sources": [
+        "https://playcode.io/canvas"
+      ],
+      "preview": true,
+      "previewHeight": "350px",
+      "codepen": false,
+      "created": "3/3/2020, 8:33:25 AM"
+    },
+    "stat": {
+      "size": 3158,
+      "created": "2020-03-03T14:33:25.861Z",
+      "modified": "2020-03-11T10:39:36.363Z"
+    }
+  },
+  {
+    "path": "content/semi-circle-donut-chart.md",
+    "url": "posts/semi-circle-donut-chart",
+    "content": "```html\n<div class=\"semi-donut\" style=\"--width: 350px\">\n  JavaScript\n  <div class=\"slice\" data-name=\"jQuery\" style=\"--percentage: 75; --fill: #0669AD;\"></div>\n  <div class=\"slice\" data-name=\"Angular\" style=\"--percentage: 50; --fill: #E62A39;\"></div>\n  <div class=\"slice\" data-name=\"React\" style=\"--percentage: 25; --fill: #FEDA3E;\"></div>\n</div>\n```\n\n```css\nbody {\n  text-align: center;\n  font-family: Arial, \"Helvetica Neue\", Helvetica, sans-serif;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: auto;\n  flex-wrap: wrap;\n  box-sizing: border-box;\n  height: 100%;\n}\n.semi-donut {\n  --percentage: 0;\n  --fill: white;\n  width: var(--width);\n  height: calc(var(--width) / 2);\n  position: relative;\n  color: #222;\n  font-size: 22px;\n  font-weight: 600;\n  display: flex;\n  align-items: flex-end;\n  justify-content: center;\n  overflow: hidden;\n  box-sizing: border-box;\n}\n.semi-donut:before {\n  content: \"\";\n  width: var(--width);\n  height: calc(var(--width) / 2);\n  border: calc(var(--width) / 8) solid rgba(0, 0, 0, 0.4);\n  border-bottom: none;\n  position: absolute;\n  box-sizing: border-box;\n  transform-origin: 50% 0%;\n  border-radius: var(--width) var(--width) 0 0;\n  left: 0;\n  top: 0;\n}\n.semi-donut .slice {\n  width: var(--width);\n  height: calc(var(--width) / 2);\n  border: calc(var(--width) / 8) solid var(--fill);\n  border-top: none;\n  position: absolute;\n  transform-origin: top center;\n  border-radius: 0 0 var(--width) var(--width);\n  left: 0;\n  top: 100%;\n  z-index: 5;\n  animation: 1s fillGraphAnimation ease-in;\n  transform: rotate(calc(1deg * (var(--percentage) * 1.8)));\n  box-sizing: border-box;\n  cursor: pointer;\n}\n.semi-donut .slice:after {\n  content: attr(data-name) \" \" counter(varible) \"%\";\n  counter-reset: varible var(--percentage);\n  background: var(--fill);\n  box-sizing: border-box;\n  border-radius: 2px;\n  color: black;\n  font-weight: 200;\n  font-size: .8em;\n  padding: 3px 5px;\n  top: 0px;\n  position: absolute;\n  left: 0;\n  transform: rotate(calc(-1deg * var(--percentage) * 1.8)) translate(-25px, 0px);\n  transition: 0.2s ease-in;\n  transform-origin: 0 50% 0;\n  opacity: 0;\n}\n.semi-donut .slice:hover {\n  filter: grayscale(10%);\n}\n.semi-donut .slice:hover:after {\n  opacity: 1;\n  left: 30px;\n}\n@keyframes fillAnimation {\n  0% {\n    transform: rotate(-45deg);\n  }\n  50% {\n    transform: rotate(135deg);\n  }\n}\n@keyframes fillGraphAnimation {\n  0% {\n    transform: rotate(0deg);\n  }\n  50% {\n    transform: rotate(180deg);\n  }\n}\n```\n",
+    "html": "<pre data-lang=\"html\"><code class=\"language-html\">&lt;div class=&quot;semi-donut&quot; style=&quot;--width: 350px&quot;&gt;\n  JavaScript\n  &lt;div class=&quot;slice&quot; data-name=&quot;jQuery&quot; style=&quot;--percentage: 75; --fill: #0669AD;&quot;&gt;&lt;/div&gt;\n  &lt;div class=&quot;slice&quot; data-name=&quot;Angular&quot; style=&quot;--percentage: 50; --fill: #E62A39;&quot;&gt;&lt;/div&gt;\n  &lt;div class=&quot;slice&quot; data-name=&quot;React&quot; style=&quot;--percentage: 25; --fill: #FEDA3E;&quot;&gt;&lt;/div&gt;\n&lt;/div&gt;</code></pre>\n<pre data-lang=\"css\"><code class=\"language-css\">body {\n  text-align: center;\n  font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: auto;\n  flex-wrap: wrap;\n  box-sizing: border-box;\n  height: 100%;\n}\n.semi-donut {\n  --percentage: 0;\n  --fill: white;\n  width: var(--width);\n  height: calc(var(--width) / 2);\n  position: relative;\n  color: #222;\n  font-size: 22px;\n  font-weight: 600;\n  display: flex;\n  align-items: flex-end;\n  justify-content: center;\n  overflow: hidden;\n  box-sizing: border-box;\n}\n.semi-donut:before {\n  content: &quot;&quot;;\n  width: var(--width);\n  height: calc(var(--width) / 2);\n  border: calc(var(--width) / 8) solid rgba(0, 0, 0, 0.4);\n  border-bottom: none;\n  position: absolute;\n  box-sizing: border-box;\n  transform-origin: 50% 0%;\n  border-radius: var(--width) var(--width) 0 0;\n  left: 0;\n  top: 0;\n}\n.semi-donut .slice {\n  width: var(--width);\n  height: calc(var(--width) / 2);\n  border: calc(var(--width) / 8) solid var(--fill);\n  border-top: none;\n  position: absolute;\n  transform-origin: top center;\n  border-radius: 0 0 var(--width) var(--width);\n  left: 0;\n  top: 100%;\n  z-index: 5;\n  animation: 1s fillGraphAnimation ease-in;\n  transform: rotate(calc(1deg * (var(--percentage) * 1.8)));\n  box-sizing: border-box;\n  cursor: pointer;\n}\n.semi-donut .slice:after {\n  content: attr(data-name) &quot; &quot; counter(varible) &quot;%&quot;;\n  counter-reset: varible var(--percentage);\n  background: var(--fill);\n  box-sizing: border-box;\n  border-radius: 2px;\n  color: black;\n  font-weight: 200;\n  font-size: .8em;\n  padding: 3px 5px;\n  top: 0px;\n  position: absolute;\n  left: 0;\n  transform: rotate(calc(-1deg * var(--percentage) * 1.8)) translate(-25px, 0px);\n  transition: 0.2s ease-in;\n  transform-origin: 0 50% 0;\n  opacity: 0;\n}\n.semi-donut .slice:hover {\n  filter: grayscale(10%);\n}\n.semi-donut .slice:hover:after {\n  opacity: 1;\n  left: 30px;\n}\n@keyframes fillAnimation {\n  0% {\n    transform: rotate(-45deg);\n  }\n  50% {\n    transform: rotate(135deg);\n  }\n}\n@keyframes fillGraphAnimation {\n  0% {\n    transform: rotate(0deg);\n  }\n  50% {\n    transform: rotate(180deg);\n  }\n}</code></pre>\n",
+    "lines": 108,
+    "source": [
+      {
+        "lang": "html",
+        "value": "<div class=\"semi-donut\" style=\"--width: 350px\">\n  JavaScript\n  <div class=\"slice\" data-name=\"jQuery\" style=\"--percentage: 75; --fill: #0669AD;\"></div>\n  <div class=\"slice\" data-name=\"Angular\" style=\"--percentage: 50; --fill: #E62A39;\"></div>\n  <div class=\"slice\" data-name=\"React\" style=\"--percentage: 25; --fill: #FEDA3E;\"></div>\n</div>"
+      },
+      {
+        "lang": "css",
+        "value": "body {\n  text-align: center;\n  font-family: Arial, \"Helvetica Neue\", Helvetica, sans-serif;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: auto;\n  flex-wrap: wrap;\n  box-sizing: border-box;\n  height: 100%;\n}\n.semi-donut {\n  --percentage: 0;\n  --fill: white;\n  width: var(--width);\n  height: calc(var(--width) / 2);\n  position: relative;\n  color: #222;\n  font-size: 22px;\n  font-weight: 600;\n  display: flex;\n  align-items: flex-end;\n  justify-content: center;\n  overflow: hidden;\n  box-sizing: border-box;\n}\n.semi-donut:before {\n  content: \"\";\n  width: var(--width);\n  height: calc(var(--width) / 2);\n  border: calc(var(--width) / 8) solid rgba(0, 0, 0, 0.4);\n  border-bottom: none;\n  position: absolute;\n  box-sizing: border-box;\n  transform-origin: 50% 0%;\n  border-radius: var(--width) var(--width) 0 0;\n  left: 0;\n  top: 0;\n}\n.semi-donut .slice {\n  width: var(--width);\n  height: calc(var(--width) / 2);\n  border: calc(var(--width) / 8) solid var(--fill);\n  border-top: none;\n  position: absolute;\n  transform-origin: top center;\n  border-radius: 0 0 var(--width) var(--width);\n  left: 0;\n  top: 100%;\n  z-index: 5;\n  animation: 1s fillGraphAnimation ease-in;\n  transform: rotate(calc(1deg * (var(--percentage) * 1.8)));\n  box-sizing: border-box;\n  cursor: pointer;\n}\n.semi-donut .slice:after {\n  content: attr(data-name) \" \" counter(varible) \"%\";\n  counter-reset: varible var(--percentage);\n  background: var(--fill);\n  box-sizing: border-box;\n  border-radius: 2px;\n  color: black;\n  font-weight: 200;\n  font-size: .8em;\n  padding: 3px 5px;\n  top: 0px;\n  position: absolute;\n  left: 0;\n  transform: rotate(calc(-1deg * var(--percentage) * 1.8)) translate(-25px, 0px);\n  transition: 0.2s ease-in;\n  transform-origin: 0 50% 0;\n  opacity: 0;\n}\n.semi-donut .slice:hover {\n  filter: grayscale(10%);\n}\n.semi-donut .slice:hover:after {\n  opacity: 1;\n  left: 30px;\n}\n@keyframes fillAnimation {\n  0% {\n    transform: rotate(-45deg);\n  }\n  50% {\n    transform: rotate(135deg);\n  }\n}\n@keyframes fillGraphAnimation {\n  0% {\n    transform: rotate(0deg);\n  }\n  50% {\n    transform: rotate(180deg);\n  }\n}"
+      }
+    ],
+    "frontmatter": {
+      "title": "Semi Circle Donut Chart",
+      "description": "Semi circle donut chart in pure css3 (adapted from Vineeth.TR (@vineethtr) on Codepen)",
+      "tags": [
+        "chart"
+      ],
+      "sources": [
+        "https://codepen.io/vineethtr/details/xGjQOX"
+      ],
+      "references": [],
+      "preview": true,
+      "codepen": true,
+      "created": "3/4/2020, 8:14:21 PM"
+    },
+    "stat": {
+      "size": 2775,
+      "created": "2020-03-05T03:37:42.863Z",
+      "modified": "2020-03-07T01:26:28.063Z"
+    }
+  },
+  {
+    "path": "content/simple-modal.md",
+    "url": "posts/simple-modal",
+    "content": "Adapted from @peiche's [codepen](https://codepen.io/peiche/pen/vhqym)\n\n> A popup window/modal window experiment based on the `:target` pseudoclass.\n> * The first popup stays open until you click the \"X\" to close. \n> * The second will close when you click anywhere outside the popup. \n\n```html\n<a href=\"#open-modal\">Click Me</a>\n<div id=\"open-modal\" class=\"overlay dark\">\n  <a class=\"cancel\" href=\"#\"></a>\n  <div class=\"popup\">\n    <h2>What the what?</h2>\n    <a class=\"close\" href=\"#\">&times;</a>\n    <div class=\"content\">\n      <p>Click outside the popup to close.</p>\n    </div>\n  </div>\n</div>\n```\n\n```css\n.overlay {\n  background: rgba(0, 0, 0, 0.5);\n  transition: opacity 200ms;\n  visibility: hidden;\n  opacity: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  align-content: center;\n  justify-content: center;\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n.overlay.dark {\n  background: rgba(0, 0, 0, 0.1);\n}\n.overlay .cancel {\n  position: absolute;\n  width: 100%;\n  height: 100vh;\n  cursor: default;\n}\n.overlay:target {\n  visibility: visible;\n  opacity: 1;\n}\n.popup {\n  margin: auto;\n  padding: 1rem 20px;\n  background: white;\n  border: 1px solid var(--color-primary);\n  width: 300px;\n  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);\n  position: absolute;\n  z-index: 1;\n}\n.dark .popup {\n  border-color: rgba(0, 0, 0, 0.3);\n  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);\n  border-radius: 3px;\n}\n.popup h2 {\n  margin-top: 0;\n  color: var(--color-text-default);\n  font-weight: 600;\n}\n.popup .close {\n  border: 0;\n  position: absolute;\n  width: 20px;\n  height: 20px;\n  top: 0;\n  right: 0.25rem;\n  opacity: 1;\n  transition: all 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);\n  font-size: 24px;\n  font-weight: bold;\n  text-decoration: none;\n  color: var(--color-primary);\n  opacity: 0.6;\n}\n.popup .close:hover {\n  opacity: 1;\n}\n.popup .content {\n  max-height: 400px;\n  overflow: auto;\n}\n```\n",
+    "html": "<p>Adapted from @peiche&#39;s <a href=\"https://codepen.io/peiche/pen/vhqym\">codepen</a></p>\n<blockquote>\n<p>A popup window/modal window experiment based on the <code>:target</code> pseudoclass.</p>\n<ul>\n<li>The first popup stays open until you click the &quot;X&quot; to close. </li>\n<li>The second will close when you click anywhere outside the popup. </li>\n</ul>\n</blockquote>\n<pre data-lang=\"html\"><code class=\"language-html\">&lt;a href=&quot;#open-modal&quot;&gt;Click Me&lt;/a&gt;\n&lt;div id=&quot;open-modal&quot; class=&quot;overlay dark&quot;&gt;\n  &lt;a class=&quot;cancel&quot; href=&quot;#&quot;&gt;&lt;/a&gt;\n  &lt;div class=&quot;popup&quot;&gt;\n    &lt;h2&gt;What the what?&lt;/h2&gt;\n    &lt;a class=&quot;close&quot; href=&quot;#&quot;&gt;&amp;times;&lt;/a&gt;\n    &lt;div class=&quot;content&quot;&gt;\n      &lt;p&gt;Click outside the popup to close.&lt;/p&gt;\n    &lt;/div&gt;\n  &lt;/div&gt;\n&lt;/div&gt;</code></pre>\n<pre data-lang=\"css\"><code class=\"language-css\">.overlay {\n  background: rgba(0, 0, 0, 0.5);\n  transition: opacity 200ms;\n  visibility: hidden;\n  opacity: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  align-content: center;\n  justify-content: center;\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n.overlay.dark {\n  background: rgba(0, 0, 0, 0.1);\n}\n.overlay .cancel {\n  position: absolute;\n  width: 100%;\n  height: 100vh;\n  cursor: default;\n}\n.overlay:target {\n  visibility: visible;\n  opacity: 1;\n}\n.popup {\n  margin: auto;\n  padding: 1rem 20px;\n  background: white;\n  border: 1px solid var(--color-primary);\n  width: 300px;\n  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);\n  position: absolute;\n  z-index: 1;\n}\n.dark .popup {\n  border-color: rgba(0, 0, 0, 0.3);\n  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);\n  border-radius: 3px;\n}\n.popup h2 {\n  margin-top: 0;\n  color: var(--color-text-default);\n  font-weight: 600;\n}\n.popup .close {\n  border: 0;\n  position: absolute;\n  width: 20px;\n  height: 20px;\n  top: 0;\n  right: 0.25rem;\n  opacity: 1;\n  transition: all 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);\n  font-size: 24px;\n  font-weight: bold;\n  text-decoration: none;\n  color: var(--color-primary);\n  opacity: 0.6;\n}\n.popup .close:hover {\n  opacity: 1;\n}\n.popup .content {\n  max-height: 400px;\n  overflow: auto;\n}</code></pre>\n",
+    "lines": 93,
+    "source": [
+      {
+        "lang": "html",
+        "value": "<a href=\"#open-modal\">Click Me</a>\n<div id=\"open-modal\" class=\"overlay dark\">\n  <a class=\"cancel\" href=\"#\"></a>\n  <div class=\"popup\">\n    <h2>What the what?</h2>\n    <a class=\"close\" href=\"#\">&times;</a>\n    <div class=\"content\">\n      <p>Click outside the popup to close.</p>\n    </div>\n  </div>\n</div>"
+      },
+      {
+        "lang": "css",
+        "value": ".overlay {\n  background: rgba(0, 0, 0, 0.5);\n  transition: opacity 200ms;\n  visibility: hidden;\n  opacity: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  align-content: center;\n  justify-content: center;\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n.overlay.dark {\n  background: rgba(0, 0, 0, 0.1);\n}\n.overlay .cancel {\n  position: absolute;\n  width: 100%;\n  height: 100vh;\n  cursor: default;\n}\n.overlay:target {\n  visibility: visible;\n  opacity: 1;\n}\n.popup {\n  margin: auto;\n  padding: 1rem 20px;\n  background: white;\n  border: 1px solid var(--color-primary);\n  width: 300px;\n  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);\n  position: absolute;\n  z-index: 1;\n}\n.dark .popup {\n  border-color: rgba(0, 0, 0, 0.3);\n  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);\n  border-radius: 3px;\n}\n.popup h2 {\n  margin-top: 0;\n  color: var(--color-text-default);\n  font-weight: 600;\n}\n.popup .close {\n  border: 0;\n  position: absolute;\n  width: 20px;\n  height: 20px;\n  top: 0;\n  right: 0.25rem;\n  opacity: 1;\n  transition: all 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);\n  font-size: 24px;\n  font-weight: bold;\n  text-decoration: none;\n  color: var(--color-primary);\n  opacity: 0.6;\n}\n.popup .close:hover {\n  opacity: 1;\n}\n.popup .content {\n  max-height: 400px;\n  overflow: auto;\n}"
+      }
+    ],
+    "frontmatter": {
+      "title": "Simple Modal",
+      "description": "A simple popup modal using only CSS and HTML using `:target`",
+      "categories": [
+        "Component"
+      ],
+      "tags": [
+        "component"
+      ],
+      "codepen": true,
+      "previewHeight": "200px",
+      "sources": [
+        "https://codepen.io/peiche/pen/vhqym"
+      ]
+    },
+    "stat": {
+      "size": 2149,
+      "created": "2020-02-28T10:06:17.592Z",
+      "modified": "2020-03-11T13:26:28.772Z"
+    }
+  }
+]
