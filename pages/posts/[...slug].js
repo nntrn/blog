@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Highlight from 'react-highlight'
-import Container from '../../components/Container'
+
 import Page from '../../components/Page'
 import Preview from '../../components/Preview'
 import Tags from '../../components/Tags'
@@ -50,32 +50,36 @@ const Post = props => {
         <meta property='og:title' content={title} />
         <meta property='og:description' content={description} />
       </Head>
-      <Container component='header'>
+      <header>
         <h1>{title}</h1>
         {content && description && <em>{description}</em>}
-      </Container>
+      </header>
       <hr />
-      <Container component='main'>
-        {content && (content.frontmatter.codepen || content.frontmatter.preview) && (
-          <Preview
-            frontmatter={content.frontmatter}
-            title={title}
-            css={source.css}
-            html={source.html}
-            js={source.js}
-          />
-        )}
-        <div style={{ margin: '1.5rem 0' }}>
-          <Highlight innerHTML>{content && content.html}</Highlight>
-        </div>
-        {content && content.frontmatter.sources && (
-          <Links title='Source' links={content.frontmatter.sources} />
-        )}
-        {content && content.frontmatter.references && (
-          <Links title='Reference' links={content.frontmatter.references} />
-        )}
-        {content && content.frontmatter.tags && <Tags tags={content.frontmatter.tags} />}
-      </Container>
+      
+      {content && (content.frontmatter.codepen || content.frontmatter.preview) && (
+        <Preview
+          frontmatter={content.frontmatter}
+          title={title}
+          css={source.css}
+          html={source.html}
+          js={source.js}
+        />
+      )}
+      <div style={{ margin: '1.5rem 0' }}>
+        <Highlight innerHTML>{content && content.html}</Highlight>
+      </div>
+      {content && content.frontmatter.sources && (
+        <Links title='Source' links={content.frontmatter.sources} />
+      )}
+      {content && content.frontmatter.references && (
+        <Links title='Reference' links={content.frontmatter.references} />
+      )}
+      {content && content.frontmatter.tags && (
+        <Tags tags={content.frontmatter.tags}>
+          <i className='fas fa-tags fa-sm'></i>
+        </Tags>
+      )}
+
     </Page>
   )
 }

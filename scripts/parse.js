@@ -83,17 +83,4 @@ fs.writeFileSync(
   `const _routes = ${JSON.stringify(publicRoutes, null, 2)}`
 )
 
-// #searchlist .list{
-//   max-height:60vh;
-//   overflow:scroll;
-//   border:2px solid var(--line-rule-color);
-//   box-shadow: 0 0 20px 3px rgba(0,0,0,.1);
-
-// }
-
-// .list .list-item{
-//     padding:.5rem;
-
-// }
-
 fs.writeFileSync('./routes.json', JSON.stringify(publicRoutes, null, 2))

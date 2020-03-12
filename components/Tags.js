@@ -1,30 +1,30 @@
 import styled from 'styled-components';
+import Link from 'next/link'
 
 const Tags = styled.div`
   margin: 0.4rem 0;
-  span {
-    background: var(--code-background);
-    border-radius: 3px;
+  a {
     padding: 2px 4px;
     font-size: 15px;
     text-transform: uppercase;
     font-family: var(--font-sans);
     margin: 0 0.25rem;
-    color: var(--text-color--lighter);
+    color: var(--primary-color-lighten);
+    white-space:pre;
   }
   .fas {
-    color: var(--text-color--lighter)
+    color: hsl(var(--primary-color-hsl), 0.75);
   }
 `;
 
-const index = ({tags, ...rest}) => {
+const index = ({tags, children, ...rest}) => {
   return (
-    <Tags>
-      <i className="fas fa-tags fa-sm"></i>
+    <Tags {...rest}>
+      {children}
       {tags.map((e) => (
-        <span key={e} {...rest}>
-          {e}
-        </span>
+        <Link href={'/' + e.replace(/\s/g, '-')} key={e} {...rest}>
+          <a>{e}</a>
+        </Link>
       ))}
     </Tags>
   )

@@ -14,8 +14,12 @@ module.exports = {
 
     routes.forEach(post => {
       paths[post.url] = { page: '/posts/[...slug]' }
+
+      post.tags.forEach(tag => {
+        paths[`/${tag.replace(/\s/g, '-')}`] = { page: '/[tag]' }
+      })
     })
+
     return paths
   }
 }
-

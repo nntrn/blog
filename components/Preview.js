@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import EmbedCodepen from './EmbedCodepen'
 
 const Container = styled.div`
-  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.35);
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   height: ${props => props.height};
   position: relative;
@@ -12,9 +12,11 @@ const Container = styled.div`
   resize: vertical;
   min-height: 100px;
   max-height: 80vh;
+  background: white;
   margin: 1.5rem 0;
   .output {
     position: absolute;
+    background: white;
     width: 100%;
     top: 0;
     font-family: sans-serif;
