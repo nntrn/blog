@@ -1,6 +1,0 @@
----
-description: Javascript dump
----
-
-# JS
-
