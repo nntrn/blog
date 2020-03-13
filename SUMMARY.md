@@ -5,7 +5,7 @@
 ## Snippets
 
 * [JS](snippets/js/README.md)
-  * [jsCommentBlock](snippets/js/jscommentblock.md)
+  * [Utils](snippets/js/jscommentblock.md)
 * [CSS](snippets/css/README.md)
   * [CSS HSL Color Theme](snippets/css/css-hsl-color-theme.md)
 
