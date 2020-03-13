@@ -7,6 +7,7 @@ import Preview from '../../components/Preview'
 import Tags from '../../components/Tags'
 import Links from '../../components/Links'
 import blog from '../../summary.json'
+import config from '../../blog.config'
 
 const preBlockLang = {
   css: [ 'css', 'scss', 'sass', 'less', 'stylus', 'postcss' ],
@@ -42,20 +43,20 @@ const Post = props => {
   const url = (content && content.url) || ''
 
   return (
-    <Page title={title} description={description} url={url}>
-      <Head>
+    <Page title={title} description={description} url={[ config.url, url ].join('')}>
+      {/* <Head>
         <title>{title}</title>
         <meta name='description' content={description} />
         <meta property='og:url' content={url} />
         <meta property='og:title' content={title} />
         <meta property='og:description' content={description} />
-      </Head>
+      </Head> */}
       <header>
         <h1>{title}</h1>
         {content && description && <em>{description}</em>}
       </header>
       <hr />
-      
+
       {content && (content.frontmatter.codepen || content.frontmatter.preview) && (
         <Preview
           frontmatter={content.frontmatter}
@@ -63,15 +64,16 @@ const Post = props => {
           css={source.css}
           html={source.html}
           js={source.js}
+          {...props}
         />
       )}
       <div style={{ margin: '1.5rem 0' }}>
         <Highlight innerHTML>{content && content.html}</Highlight>
       </div>
-      {content && content.frontmatter.sources && (
+      {content && content.frontmatter && content.frontmatter.sources  && (
         <Links title='Source' links={content.frontmatter.sources} />
       )}
-      {content && content.frontmatter.references && (
+      {content && content.frontmatter && content.frontmatter.references && (
         <Links title='Reference' links={content.frontmatter.references} />
       )}
       {content && content.frontmatter.tags && (
@@ -79,7 +81,6 @@ const Post = props => {
           <i className='fas fa-tags fa-sm'></i>
         </Tags>
       )}
-
     </Page>
   )
 }

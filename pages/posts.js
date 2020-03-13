@@ -7,13 +7,13 @@ const Home = () => {
   return (
     <Page>
       {POSTS_JSON.map(post => (
-        <div key={post.stat.created} className="card">
-          <Link href="/posts/[...slug]" as={post.url}>
+        <div key={post.stat.created} className='card'>
+          <Link href='/posts/[...slug]' as={post.url}>
             <h2>
               <a>{post.frontmatter.title}</a>
             </h2>
           </Link>
-          <div className="card-container">{post.frontmatter.description}</div>
+          <div className='card-container'>{post.frontmatter.description}</div>
         </div>
       ))}
     </Page>

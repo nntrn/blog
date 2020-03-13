@@ -1,4 +1,3 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 
 const EmbedCodepen = props => {
@@ -63,9 +62,10 @@ EmbedCodepen.propTypes = {
   layout: PropTypes.oneOf([ 'top', 'left', 'right' ]),
   css_starter: PropTypes.oneOf([ 'normalize', 'reset', 'neither' ]),
   css_prefix: PropTypes.oneOf([ 'autoprefixer', 'prefixfree', 'neither' ]),
-  html_pre_processor: PropTypes.oneOf([ 'none', 'slim', 'haml', 'markdown' ]),
-  css_pre_processor: PropTypes.oneOf([ 'none', 'less', 'scss', 'sass', 'stylus' ]),
+  html_pre_processor: PropTypes.oneOf([ 'html', 'none', 'slim', 'haml', 'markdown' ]),
+  css_pre_processor: PropTypes.oneOf([ 'css', 'none', 'less', 'scss', 'sass', 'stylus' ]),
   js_pre_processor: PropTypes.oneOf([
+    'js',
     'none',
     'coffeescript',
     'babel',

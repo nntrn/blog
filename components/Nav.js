@@ -1,13 +1,12 @@
 import Link from 'next/link'
 import styled from 'styled-components'
 
-import Container from './Container'
 import Search from './Search'
 
 const style = {
   zIndex: 1000,
   background: 'white',
-  padding: '1rem var(--page-padding)',
+  padding: '1rem 0',
   width: '100%',
   display: 'flex',
   flexWrap: 'wrap'
@@ -33,13 +32,13 @@ const PostLink = styled.a`
 
 export default ({ routes, ...rest }) => {
   return (
-    <Container component='nav' style={style} {...rest}>
+    <nav style={style} {...rest}>
       {Object.keys(routes).map(e => (
         <Link href={routes[e]} key={e}>
           <PostLink style={{ marginRight: '.5rem' }}>{e}</PostLink>
         </Link>
       ))}
       <Search />
-    </Container>
+    </nav>
   )
 }

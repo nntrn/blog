@@ -29,6 +29,16 @@
     ]
   },
   {
+    "url": "/posts/direction-aware-hover-effect",
+    "title": "Direction Aware Hover Effect",
+    "description": "Direction-aware 3D hover effect created by Noel Delgado",
+    "content": "",
+    "tags": [
+      "animation",
+      "css"
+    ]
+  },
+  {
     "url": "/posts/event-delegation-menu",
     "title": "Event Delegation Menu",
     "description": "Event delegation handler reads the attribute and executes method on call",
@@ -44,8 +54,17 @@
     "content": "This feature is exclusive of `next export`. Please refer to [Static HTML export](https://nextjs.org/docs/advanced-features/static-html-export) if you want to learn more about it. Let's start with an example, to create a custom `exportPathMap` for an app with the following pages: - `pages/index.js` - `pages/about.js` - `pages/post.js` Open `next.config.js` and add the following `exportPathMap` config: ",
     "tags": [
       "nextjs",
-      "next",
       "react"
+    ]
+  },
+  {
+    "url": "/posts/grid-container",
+    "title": "Grid Container",
+    "description": "",
+    "content": "Created by [@TheAngularGuy](https://codepen.io/TheAngularGuy) ",
+    "tags": [
+      "grid",
+      "css"
     ]
   },
   {

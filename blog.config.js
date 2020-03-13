@@ -4,17 +4,25 @@ const type = {
   String: "''",
   Array: '[]',
   Object: '{}',
-  Boolean: false
+  Boolean: {
+    true: true,
+    false: false
+  }
 }
 
 module.exports = {
   title: 'blog',
   description: 'by annie tran',
+  url: 'https://blog.nntrn.now.sh',
+  GA: 'UA-91105441-10',
   favicon: '/favicon.ico',
   codepen: {
     username: 'nntrn'
   },
   dir: __dirname,
+  social: {
+    github: 'https://github.com/nntrn/blog',
+  },
   stylesheets: [
     'https://unpkg.com/sanitize.css',
     // 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/night-owl.min.css',
@@ -34,7 +42,7 @@ module.exports = {
       tags: type.Array,
       sources: type.Array,
       references: type.Array,
-      preview: type.Boolean
+      preview: type.Boolean.true
     }
   },
   theme: {

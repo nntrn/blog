@@ -51,15 +51,7 @@ const RootStyles = () => {
           --darknessTransform: 20%;
           ${themeColors.join('\n')}
           --a: 1;
-          --pre-background: #061c2f;
-
-          --primary-color-rgb: 56, 128, 255;
-
           --light: #f5f7fa;
-          --pre-border-color: var(--line-rule-color);
-          --background: white;
-          --code-background: #f5f7fa;
-          --code-color: var(--text-color--dark);
 
           --line-rule-color: #edf2f6;
           --offset-background: #fdfdff;
@@ -69,8 +61,8 @@ const RootStyles = () => {
           --text-color--dark: #020814;
           --text-color--lighter: #abb2bf;
           --text-color--light: #73849a;
-          --page-padding: 3rem;
-
+          --code-background: #f5f7fa;
+          
           --font-monospace: 'SFMono-Regular', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo,
             Courier, monospace;
           --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',

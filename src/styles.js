@@ -11,12 +11,13 @@ export const style = {
     flex-grow: 1;
     font-family: var(--font-monospace);
     border-right: 3px solid var(--text-color--dark);
-    padding: 0.25rem 1.25rem;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
 
     h4 {
       display: block;
       border-bottom: 3px dotted white;
-      color: hsl(var(--primary-color-hsl), 0.5);
+      color: var(--text-color--dark);
     }
   `,
   section: css`
@@ -28,7 +29,7 @@ export const style = {
     border-radius: 3px;
   `,
   search: css`
-    --search-width: 30vw;
+    --search-width: 100%;
     position: relative;
     width: var(--search-width);
     display: flex;
@@ -37,11 +38,12 @@ export const style = {
     align-items: center;
     align-self: flex-end;
     width: 100%;
+    margin-bottom: 1rem;
 
     input {
       padding: 5px 10px;
       border: 0px solid transparent;
-      font-size: inherit;
+      font-size: 16px;
       width: var(--search-width);
       outline: 0;
       background: var(--light);
@@ -64,14 +66,13 @@ export const style = {
       position: absolute;
       z-index: 1000;
       top: 0;
-      background: white;
+      background: var(--light);
       margin-top: 2.6rem;
       height: 0;
       max-height: 0;
       overflow: hidden;
       width: var(--search-width);
       border-radius: 4px;
-      // box-shadow: inset 0 -3px 8px 0px rgba(0, 0, 0, 0.13);
 
       &:hover {
         max-height: 60vh;
@@ -84,15 +85,23 @@ export const style = {
         font-family: var(--font-sans);
         font-weight: 400;
         line-height: 1.2;
-        border-bottom: 2px solid #222;
+        border: 3px solid #000;
+        border-bottom-width:1.5px;
+        border-top-width:1.5px;
+        background: var(--light);
+
+        &:hover{
+          background: rgba(0,0,0,.1);
+        }
 
         .description {
+          color: #000;
           font-size: 0.8em;
         }
         mark {
           padding: 0;
-          color: black;
-          background-color: yellow;
+          color: rgba(0,0,0,.4);
+          background-color: transparent;
         }
       }
       a {

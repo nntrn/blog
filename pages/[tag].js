@@ -4,6 +4,7 @@ import Page from '../components/Page'
 import Link from 'next/link'
 
 import routes from '../routes.json'
+import config from '../blog.config'
 
 const Tag = props => {
   const router = useRouter()
@@ -13,7 +14,11 @@ const Tag = props => {
 
   const curPage = router.asPath.replace('/', '')
   return (
-    <Page>
+    <Page
+      title={curPage}
+      description={`tagged posts for ${curPage}`}
+      url={[ config.url, router.asPath ].join('')}
+    >
       {curPage.length > 2 && (
         <h1>
           <i
@@ -26,29 +31,29 @@ const Tag = props => {
           <span>{curPage}</span>
         </h1>
       )}
-      <div className='card-list'>
-        {content.map((e, i) => (
-          <div className='card'>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignContent: 'center',
-                alignItems: 'center'
-              }}
-              key={e.title + i}
-            >
-              <h3>
-                <Link href={e.url}>
-                  <a>{e.title}</a>
-                </Link>
-              </h3>
-              <Tags tags={e.tags} />
-            </div>
-            <div>{e.description}</div>
+
+      {content.map((e, i) => (
+        <div className='card' key={e.url}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignContent: 'center',
+              alignItems: 'center',
+              flexWrap: 'wrap'
+            }}
+          >
+            <h3>
+              <Link href={e.url}>
+                <a>{e.title}</a>
+              </Link>
+            </h3>
+            <Tags tags={e.tags} />
           </div>
-        ))}
-      </div>
+          <div>{e.description}</div>
+        </div>
+      ))}
+
       <hr />
       <span>length: {content.length}</span>
     </Page>

@@ -88,8 +88,7 @@ summary,
 time,
 mark,
 audio,
-video,
-hr {
+video {
   margin: 0;
   /* padding: 0; */
   border: 0;
@@ -2231,10 +2230,11 @@ blockquote code {
   font-weight: 500;
 }
 
-.text-component hr {
+hr {
   background: var(--color-contrast-low);
   height: 1px;
-  margin: calc(var(--space-lg) * var(--text-vspace-multiplier)) auto;
+  border: 0;
+  margin: var(--space-sm) 0;
 }
 
 .text-component .drop-cap:first-letter {
