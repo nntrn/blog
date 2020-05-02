@@ -10,9 +10,9 @@ export const style = {
     max-width: 100%;
     flex-grow: 1;
     font-family: var(--font-monospace);
-    border-right: 3px solid var(--text-color--dark);
     padding: 1rem 1.25rem;
     margin: 1rem 0;
+    font-size: 14px;
 
     h4 {
       display: block;
@@ -49,16 +49,18 @@ export const style = {
       background: var(--light);
       box-shadow: inset 0 0px 0 0 transparent;
       transition: box-shadow 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      border-bottom: 5px solid #fff;
 
       &:focus {
-        background: white;
+        background: #fff;
         box-shadow: inset 0 -3px 0 0 var(--color-contrast-higher);
+        border-bottom: 5px solid #000;
 
         & + .list {
           max-height: 60vh;
           height: fit-content;
           overflow: scroll;
-          box-shadow: 0 0px 8px 2px rgba(0, 0, 0, 0.13);
+          box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.1);
         }
       }
     }
@@ -66,13 +68,12 @@ export const style = {
       position: absolute;
       z-index: 1000;
       top: 0;
-      background: var(--light);
+      background: #fff;
       margin-top: 2.6rem;
       height: 0;
       max-height: 0;
       overflow: hidden;
       width: var(--search-width);
-      border-radius: 4px;
 
       &:hover {
         max-height: 60vh;
@@ -86,22 +87,21 @@ export const style = {
         font-weight: 400;
         line-height: 1.2;
         border: 3px solid #000;
-        border-bottom-width:1.5px;
-        border-top-width:1.5px;
-        background: var(--light);
+        border-bottom-width: 1.5px;
+        border-top-width: 1.5px;
+        background: #f6f6f6;
+        color: #999;
 
-        &:hover{
-          background: rgba(0,0,0,.1);
+        &:hover {
+          background: rgba(0, 0, 0, 0.1);
         }
 
         .description {
-          color: #000;
           font-size: 0.8em;
         }
         mark {
           padding: 0;
-          color: rgba(0,0,0,.4);
-          background-color: transparent;
+          color: rgba(0, 0, 0, 0.4);
         }
       }
       a {
@@ -109,6 +109,7 @@ export const style = {
         padding: 0;
         font-weight: 600;
         text-transform: capitalize;
+        color: #000;
       }
     }
   `

@@ -1,8 +1,6 @@
-import SiteHead from './SiteHead'
-import Search from './Search'
 import Head from 'next/head'
 
-import TagsList from './TagsList'
+import { TagsList, SiteHead, Search } from './'
 import { TagList, Section } from '../src/styles'
 import config from '../blog.config'
 
@@ -19,7 +17,7 @@ const Page = props => {
       </Head>
       <SiteHead />
 
-      <div style={{ display: 'flex', height: '100%' }}>
+      <div style={{ display: 'flex', height: '100vh' }}>
         <TagList>
           <h4>TAGS</h4>
           <TagsList style={{ margin: '0' }} />

@@ -4,14 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next",
-    "predev": "yarn run summary",
-    "summary": "node scripts/parse",
+    "predev": "node scripts/parse && node scripts/create-index components",
     "postsummary": "prettier public/routes.js --write && eslint ./public/*.js --fix",
     "lint": "eslint ./components/*.js --fix",
     "build": "next build",
     "start": "next start",
     "export": "next build && next export",
-    "postexport": "prettier --print-width 155 \"./out/**/*.html\" --write",
+    "postbuild": "prettier --print-width 155 \"./out/**/*.html\" --write",
     "add": "node scripts/new-post"
   },
   "devDependencies": {

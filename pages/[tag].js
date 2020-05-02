@@ -17,14 +17,14 @@ const Tag = props => {
     <Page
       title={curPage}
       description={`tagged posts for ${curPage}`}
-      url={[ config.url, router.asPath ].join('')}
+      url={[config.url, router.asPath].join('')}
     >
       {curPage.length > 2 && (
         <h1>
           <i
             className='fas fa-tag fa-xs'
             style={{
-              color: 'hsl(var(--secondary-color-hsl), 1)',
+              color: 'hsl(var(--primary-color-hsl), 1)',
               marginRight: '.5rem'
             }}
           ></i>

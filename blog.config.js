@@ -21,14 +21,14 @@ module.exports = {
   },
   dir: __dirname,
   social: {
-    github: 'https://github.com/nntrn/blog',
+    github: 'https://github.com/nntrn/blog'
   },
   stylesheets: [
     'https://unpkg.com/sanitize.css',
-    // 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/night-owl.min.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/night-owl.min.css',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css',
-    '/codyhouse-framework.css'
-    // '/style.css'
+    // '/codyhouse-framework.css'
+    '/style.css'
   ],
   routes: {
     Home: '/',

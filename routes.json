@@ -39,6 +39,15 @@
     ]
   },
   {
+    "url": "/posts/drag-and-drop",
+    "title": "Drag And Drop",
+    "description": "",
+    "content": "",
+    "tags": [
+      "dom"
+    ]
+  },
+  {
     "url": "/posts/event-delegation-menu",
     "title": "Event Delegation Menu",
     "description": "Event delegation handler reads the attribute and executes method on call",
@@ -88,6 +97,15 @@
     ]
   },
   {
+    "url": "/posts/resizeable_table",
+    "title": "Resizeable Table",
+    "description": "",
+    "content": "",
+    "tags": [
+      "dom"
+    ]
+  },
+  {
     "url": "/posts/semi-circle-donut-chart",
     "title": "Semi Circle Donut Chart",
     "description": "Semi circle donut chart in pure css3 (adapted from Vineeth.TR (@vineethtr) on Codepen)",
@@ -104,5 +122,12 @@
     "tags": [
       "component"
     ]
+  },
+  {
+    "url": "/posts/svg-code-to-base64",
+    "title": "Svg Code To Base 64",
+    "description": "",
+    "content": "",
+    "tags": []
   }
 ]
