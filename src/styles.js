@@ -1,37 +1,40 @@
-import { css } from '@emotion/react'
-import styled from '@emotion/styled'
-import RootStyles from './root'
+import styled, { css } from 'styled-components'
+
 import media from './media'
 
-export const globalStyles = <RootStyles />
+export const theme = {
+  main: '#fff',
+  bg: {
+    accent: '#f6f8fa',
+    light: '#fff',
+  },
+  color: {
+    link: '#0366d6',
+    body: '#24292e',
+  },
+  border: {
+    accent: '#e1e4e8',
+    darker: '#d1d5da',
+    light: '#fff',
+  },
+}
 
-export const style = {
+const style = {
   nav: css`
-    max-width: 100%;
     flex-grow: 1;
-    font-family: var(--font-monospace);
     padding: 1rem 1.25rem;
     margin: 1rem 0;
     font-size: 14px;
-
-    h4 {
-      display: block;
-      border-bottom: 3px dotted white;
-      color: var(--text-color--dark);
+    display: block;
     }
   `,
   section: css`
-    width: 80%;
-    background: hsl(var(--primary-color-hsl), 0.5);
-    background: white;
     padding: 1.25rem;
-    border-color: hsl(var(--primary-color-hsl), 0.5);
-    border-radius: 3px;
+    margin: 'auto';
+    flex-grow: 3;
   `,
   search: css`
-    --search-width: 100%;
     position: relative;
-    width: var(--search-width);
     display: flex;
     justify-content: flex-end;
     align-content: center;
@@ -39,22 +42,21 @@ export const style = {
     align-self: flex-end;
     width: 100%;
     margin-bottom: 1rem;
+    flex-grow: 1;
+    font-weight: 600;
+    font-size: 0.9em;
+    background: transparent;
 
     input {
-      padding: 5px 10px;
-      border: 0px solid transparent;
       font-size: 16px;
-      width: var(--search-width);
       outline: 0;
-      background: var(--light);
       box-shadow: inset 0 0px 0 0 transparent;
       transition: box-shadow 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      border-bottom: 5px solid #fff;
+      border-bottom: 5px solid ${theme.border.accent};
 
       &:focus {
         background: #fff;
-        box-shadow: inset 0 -3px 0 0 var(--color-contrast-higher);
-        border-bottom: 5px solid #000;
+        border-bottom: 5px solid ${theme.border.darker};
 
         & + .list {
           max-height: 60vh;
@@ -68,12 +70,11 @@ export const style = {
       position: absolute;
       z-index: 1000;
       top: 0;
-      background: #fff;
-      margin-top: 2.6rem;
+      background: ${theme.main};
+      margin-top: 2rem;
       height: 0;
       max-height: 0;
       overflow: hidden;
-      width: var(--search-width);
 
       &:hover {
         max-height: 60vh;
@@ -83,19 +84,20 @@ export const style = {
 
       .list-item {
         padding: 0.5rem;
-        font-family: var(--font-sans);
         font-weight: 400;
         line-height: 1.2;
-        border: 3px solid #000;
+        border: 3px solid ${theme.border.accent};
         border-bottom-width: 1.5px;
         border-top-width: 1.5px;
-        background: #f6f6f6;
-        color: #999;
+        background: ${theme.main};
+        color: ${theme.color.main};
 
         &:hover {
-          background: rgba(0, 0, 0, 0.1);
+          background: ${theme.bg.accent};
         }
-
+        code {
+          background: ${theme.main};
+        }
         .description {
           font-size: 0.8em;
         }
@@ -107,12 +109,9 @@ export const style = {
       a {
         box-shadow: none;
         padding: 0;
-        font-weight: 600;
-        text-transform: capitalize;
-        color: #000;
       }
     }
-  `
+  `,
 }
 
 export const TagList = styled('nav')`

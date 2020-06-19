@@ -2,10 +2,11 @@ import styled from 'styled-components'
 
 const Sources = styled.div`
   margin: 4rem 0;
-  font-family: var(--font-sans);
-  ul {
-    margin: 1rem 0;
-  }
+`
+
+const List = styled.ul`
+  margin: 1rem 0;
+  width: 20vw;
 `
 
 export default ({ title = 'Source', sources, ...props }) => {
@@ -15,13 +16,13 @@ export default ({ title = 'Source', sources, ...props }) => {
         {title}
         {sources.length > 1 ? 's' : ''}:
       </h3>
-      <ul>
-        {sources.map(link => (
+      <List>
+        {sources.map((link) => (
           <li key={link}>
             <a href={link}>{link}</a>
           </li>
         ))}
-      </ul>
+      </List>
     </Sources>
   )
 }

@@ -1,23 +1,41 @@
 import React from 'react'
 import Link from 'next/link'
-
-import Fuse from 'fuse.js'
-
 import { SearchList } from '../src/styles'
 import routes from '../routes.json'
+import config from '../blog.config'
 
-const routes2 = routes.map(e => ({
-  ...e,
-  description: e.description.replace(/`(\S+)`/g, '<code>$1</code>')
-}))
+import { simpleMarkdownToHTML } from './utils/mark'
 
-const Search = props => {
-  const [ list, setList ] = React.useState([])
-  const [ value, setValue ] = React.useState([])
+// https://stackoverflow.com/a/27412445/7460613
+var fuzzy = function (items, key) {
+  return function (query) {
+    var words = query.toLowerCase().split(' ')
+    return items.filter(function (item) {
+      var normalizedTerm = item[key].toLowerCase()
+      return words.every(function (word) {
+        return normalizedTerm.indexOf(word) > -1
+      })
+    })
+  }
+}
 
-  const handleChange = event => {
+const postList = fuzzy(
+  routes.map((e) => ({
+    ...e,
+    description: e.description,
+
+    search: [e.title, e.description].join(' '),
+  })),
+  'search'
+)
+
+const Search = (props) => {
+  const [list, setList] = React.useState(routes)
+  const [value, setValue] = React.useState([])
+
+  const handleChange = (event) => {
     setValue(event.target.value)
-    setList(searchPosts(event.target.value))
+    setList(postList(event.target.value))
   }
 
   return (
@@ -29,25 +47,31 @@ const Search = props => {
         autoCorrect='off'
         autoComplete='off'
         spellCheck='false'
-        onChange={e => handleChange(e)}
+        onChange={(e) => handleChange(e)}
         value={value}
+        required={true}
       />
+
       <div className='list'>
-        {list.map(item => {
+        {list.map((item) => {
+          let re = new RegExp(`(${value})`, 'gi')
+
           return (
             <div className='list-item' key={item.url}>
-              <h4>
-                <Link href={item.url}>{item.title}</Link>
-              </h4>
-              <div
-                className='description'
-                dangerouslySetInnerHTML={{
-                  __html: item.description.replace(
-                    new RegExp(`(${value})`, 'gi'),
-                    '<mark>$1</mark>'
-                  )
-                }}
-              />
+              <Link href={config.dynamic.post} as={item.url}>
+                <a>
+                  <h4
+                    dangerouslySetInnerHTML={{
+                      __html: simpleMarkdownToHTML(item.title.replace(re, '<mark>$1</mark>')),
+                    }}
+                  />
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: simpleMarkdownToHTML(item.description.replace(re, '<mark>$1</mark>')),
+                    }}
+                  />
+                </a>
+              </Link>
             </div>
           )
         })}
@@ -57,11 +81,3 @@ const Search = props => {
 }
 
 export default Search
-
-export const searchPosts = searchString => {
-  var options = {
-    keys: [ 'title', 'tags', 'description' ]
-  }
-  var fuse = new Fuse(routes2, options)
-  return fuse.search(searchString)
-}

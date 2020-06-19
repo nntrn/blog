@@ -1,6 +1,5 @@
 import EmbedCodepen from './EmbedCodepen'
 import Links from './Links'
-import Nav from './Nav'
 import Page from './Page'
 import Preview from './Preview'
 import Search from './Search'
@@ -13,7 +12,6 @@ import Text from './Text'
 export {
   EmbedCodepen,
   Links,
-  Nav,
   Page,
   Preview,
   Search,

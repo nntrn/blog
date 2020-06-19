@@ -2,9 +2,11 @@ import Head from 'next/head'
 
 import { TagsList, SiteHead, Search } from './'
 import { TagList, Section } from '../src/styles'
+
+import RootStyles from '../src/root'
 import config from '../blog.config'
 
-const Page = props => {
+const Page = (props) => {
   const { description, url, title, children, html, content, frontmatter, ...rest } = props
   return (
     <>
@@ -17,13 +19,15 @@ const Page = props => {
       </Head>
       <SiteHead />
 
-      <div style={{ display: 'flex', height: '100vh' }}>
+      <RootStyles main='#fff' />
+
+      <div className='page' style={{ margin: 'auto', display: 'flex', padding: '1rem' }}>
         <TagList>
           <h4>TAGS</h4>
           <TagsList style={{ margin: '0' }} />
-          <hr />
+
           <a href={config.social.github}>
-            <i className='fab fa-github fa-lg' style={{ color: 'var(--color-github)' }}></i>
+            <i className='fab fa-github fa-lg'></i>
           </a>
         </TagList>
         <Section>
@@ -37,7 +41,7 @@ const Page = props => {
 
 Page.defaultProps = {
   title: '',
-  description: ''
+  description: '',
 }
 
 export default Page

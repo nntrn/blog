@@ -6,9 +6,9 @@ import Link from 'next/link'
 import routes from '../routes.json'
 import config from '../blog.config'
 
-const Tag = props => {
+const Tag = (props) => {
   const router = useRouter()
-  const content = routes.filter(posts =>
+  const content = routes.filter((posts) =>
     posts.tags.includes(router.asPath.replace(/\//g, '').replace(/-/g, ' '))
   )
 
@@ -25,7 +25,7 @@ const Tag = props => {
             className='fas fa-tag fa-xs'
             style={{
               color: 'hsl(var(--primary-color-hsl), 1)',
-              marginRight: '.5rem'
+              marginRight: '.5rem',
             }}
           ></i>
           <span>{curPage}</span>
@@ -38,13 +38,13 @@ const Tag = props => {
             style={{
               display: 'flex',
               justifyContent: 'space-between',
-              alignContent: 'center',
-              alignItems: 'center',
-              flexWrap: 'wrap'
+              alignContent: 'flex-end',
+              alignItems: 'flex-end',
+              flexWrap: 'wrap',
             }}
           >
             <h3>
-              <Link href={e.url}>
+              <Link href={config.dynamic.post} as={e.url}>
                 <a>{e.title}</a>
               </Link>
             </h3>

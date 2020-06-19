@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router'
-import Head from 'next/head'
 import Highlight from 'react-highlight'
 
 import Page from '../../components/Page'
@@ -9,31 +8,29 @@ import Links from '../../components/Links'
 import blog from '../../summary.json'
 import config from '../../blog.config'
 
+import { simpleMarkdownToHTML } from '../../components/utils/mark'
+
 const preBlockLang = {
-  css: [ 'css', 'scss', 'sass', 'less', 'stylus', 'postcss' ],
-  html: [ 'html', 'slim', 'haml', 'markdown', 'pug' ],
-  js: [ 'js', 'babel', 'typescript', 'coffeescript', 'livescript' ],
+  css: ['css', 'scss', 'sass', 'less', 'stylus', 'postcss'],
+  html: ['html', 'slim', 'haml', 'markdown', 'pug'],
+  js: ['js', 'babel', 'typescript', 'coffeescript', 'livescript'],
   getAvailable: function (type, input = '') {
     return this[type].includes(input.toLowerCase()) ? input.toLowerCase() : type
-  }
+  },
 }
 
-const Post = props => {
+const Post = (props) => {
   const router = useRouter()
-  const content = blog.filter(e => '/' + e.url === router.asPath)[0]
+  const content = blog.filter((e) => e.url === router.asPath)[0]
 
-  const source = {
-    html: '',
-    css: '',
-    js: ''
-  }
+  const source = { html: '', css: '', js: '' }
 
-  Object.keys(source).forEach(lang => {
+  Object.keys(source).forEach((lang) => {
     source[lang] =
       (content &&
         content.source
-          .filter(e => preBlockLang[lang].includes(e.lang))
-          .map(e => e.value)
+          .filter((e) => preBlockLang[lang].includes(e.lang))
+          .map((e) => e.value)
           .join('\n')) ||
       ''
   })
@@ -43,17 +40,14 @@ const Post = props => {
   const url = (content && content.url) || ''
 
   return (
-    <Page title={title} description={description} url={[ config.url, url ].join('')}>
-      {/* <Head>
-        <title>{title}</title>
-        <meta name='description' content={description} />
-        <meta property='og:url' content={url} />
-        <meta property='og:title' content={title} />
-        <meta property='og:description' content={description} />
-      </Head> */}
+    <Page title={title} description={description} url={[config.url, url].join('')}>
       <header>
         <h1>{title}</h1>
-        {content && description && <em>{description}</em>}
+        <span
+          dangerouslySetInnerHTML={{
+            __html: simpleMarkdownToHTML(description),
+          }}
+        />
       </header>
       <hr />
 
@@ -70,15 +64,16 @@ const Post = props => {
       <div style={{ margin: '1.5rem 0' }}>
         <Highlight innerHTML>{content && content.html}</Highlight>
       </div>
-      {content && content.frontmatter && content.frontmatter.sources  && (
+      {content && content.frontmatter && content.frontmatter.sources && (
         <Links title='Source' links={content.frontmatter.sources} />
       )}
       {content && content.frontmatter && content.frontmatter.references && (
         <Links title='Reference' links={content.frontmatter.references} />
       )}
+
       {content && content.frontmatter.tags && (
         <Tags tags={content.frontmatter.tags}>
-          <i className='fas fa-tags fa-sm'></i>
+          <i className='fas fa-tags fa-sm gray-light' style={{ marginRight: '.3rem' }}></i>
         </Tags>
       )}
     </Page>

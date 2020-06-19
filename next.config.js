@@ -4,22 +4,22 @@ const config = require('./blog.config')
 module.exports = {
   // exportTrailingSlash: true,
   devIndicators: {
-    autoPrerender: false
+    autoPrerender: false,
   },
 
   exportPathMap: function () {
     const paths = Object.values(config.routes)
-      .map(e => ({ [e]: { page: e } }))
+      .map((e) => ({ [e]: { page: e } }))
       .reduce((a, b) => Object.assign(a, b), {})
 
-    routes.forEach(post => {
-      paths[post.url] = { page: '/posts/[...slug]' }
+    routes.forEach((post) => {
+      paths[post.url] = { page: '/post/[...slug]' }
 
-      post.tags.forEach(tag => {
+      post.tags.forEach((tag) => {
         paths[`/${tag.replace(/\s/g, '-')}`] = { page: '/[tag]' }
       })
     })
 
     return paths
-  }
+  },
 }

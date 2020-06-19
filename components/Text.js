@@ -13,19 +13,19 @@ const aliases = {
   pb: 'paddingBottom',
   pl: 'paddingLeft',
   px: ['paddingLeft', 'paddingRight'],
-  py: ['paddingTop', 'paddingBottom']
+  py: ['paddingTop', 'paddingBottom'],
 }
 
-const Text = props => {
+const Text = (props) => {
   const { component: Component = props.as, as, sx, children, style, ...rest } = props
 
   var propStyles = {
     ...Object.entries(sx)
-      .map(e => {
+      .map((e) => {
         var css = {}
 
         if (Array.isArray(aliases[e[0]])) {
-          aliases[e[0]].forEach(c => {
+          aliases[e[0]].forEach((c) => {
             css[c] = e[1]
           })
         } else {
@@ -33,7 +33,7 @@ const Text = props => {
         }
         return css
       })
-      .reduce((a, b) => Object.assign(a, b), {})
+      .reduce((a, b) => Object.assign(a, b), {}),
   }
 
   return (
@@ -45,7 +45,7 @@ const Text = props => {
 
 Text.defaultProps = {
   as: 'span',
-  size: 'inherit'
+  size: 'inherit',
 }
 
 export default Text

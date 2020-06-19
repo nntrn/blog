@@ -6,8 +6,8 @@ const type = {
   Object: '{}',
   Boolean: {
     true: true,
-    false: false
-  }
+    false: false,
+  },
 }
 
 module.exports = {
@@ -17,22 +17,29 @@ module.exports = {
   GA: 'UA-91105441-10',
   favicon: '/favicon.ico',
   codepen: {
-    username: 'nntrn'
+    username: 'nntrn',
   },
   dir: __dirname,
   social: {
-    github: 'https://github.com/nntrn/blog'
+    github: 'https://github.com/nntrn/blog',
   },
   stylesheets: [
     'https://unpkg.com/sanitize.css',
     'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/night-owl.min.css',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css',
-    // '/codyhouse-framework.css'
-    '/style.css'
+    '/style.css',
+    // '/main.css',
   ],
+  scripts: {
+    console: '/assets/console.js',
+  },
   routes: {
     Home: '/',
-    Posts: '/posts'
+    Post: '/post',
+  },
+  dynamic: {
+    post: '/post/[...slug]',
+    tag: '/[tag]',
   },
   content: {
     path: path.join(__dirname, 'content/'),
@@ -42,13 +49,13 @@ module.exports = {
       tags: type.Array,
       sources: type.Array,
       references: type.Array,
-      preview: type.Boolean.true
-    }
+      preview: type.Boolean.true,
+    },
   },
   theme: {
     color: {
       primary: '#0074d9',
-      secondary: '#e74c3c'
-    }
-  }
+      secondary: '#e74c3c',
+    },
+  },
 }
