@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Page from '../components/Page'
+import Tags from '../components/Tags'
 
 import POSTS_JSON from '../summary.json'
 
@@ -14,6 +15,7 @@ const Home = () => {
             </Link>
           </h2>
           <div className='card-container'>{post.frontmatter.description}</div>
+          <Tags tags={post.frontmatter.tags} />
         </div>
       ))}
     </Page>

@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import Page from '../components/Page'
+import Page from '../../components/Page'
 
-import POSTS_JSON from '../summary.json'
+import POSTS_JSON from '../../summary.json'
 
 const Home = () => {
   return (
