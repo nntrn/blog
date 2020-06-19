@@ -531,46 +531,5 @@
       "created": "2020-03-17T04:11:57.139Z",
       "modified": "2020-03-17T04:12:28.104Z"
     }
-  },
-  {
-    "path": "content/test.md",
-    "url": "/post/test",
-    "content": "```html\nhtml\n```\n\n```css\ncss\n```\n\n```js\nconsole.log('js')\n```",
-    "html": "<pre data-lang=\"html\"><code class=\"language-html\">html</code></pre>\n<pre data-lang=\"css\"><code class=\"language-css\">css</code></pre>\n<pre data-lang=\"js\"><code class=\"language-js\">console.log(&#39;js&#39;)</code></pre>\n",
-    "lines": 11,
-    "source": [
-      {
-        "lang": "html",
-        "value": "html"
-      },
-      {
-        "lang": "css",
-        "value": "css"
-      },
-      {
-        "lang": "js",
-        "value": "console.log('js')"
-      }
-    ],
-    "frontmatter": {
-      "title": "Test",
-      "description": "**bold** *italic* `code` test description",
-      "tags": [
-        "test"
-      ],
-      "sources": [
-        "post/test"
-      ],
-      "references": [
-        "/post/test"
-      ],
-      "preview": true,
-      "created": "6/9/2020, 12:08:05 AM"
-    },
-    "stat": {
-      "size": 249,
-      "created": "2020-06-09T05:08:05.700Z",
-      "modified": "2020-06-09T05:14:49.646Z"
-    }
   }
 ]

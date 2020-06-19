@@ -13,12 +13,6 @@ const Container = styled.div`
   min-height: 100px;
   background: white;
   margin: 1.5rem 0;
-
-  iframe {
-    width: 100%;
-    height: 100%;
-    overflow: scroll;
-  }
 `
 
 const Preview = (props) => {
@@ -35,6 +29,7 @@ const Preview = (props) => {
       '<style>\nbody{padding: 1rem}',
       css && `\n${css}\n`,
       '</style>',
+      `<script src="${config.scripts.console}"></script>`,
       '</head>',
       '<body>',
       html,
@@ -69,6 +64,7 @@ const Preview = (props) => {
         allowFullScreen={true}
         sandbox='allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts'
         src='/empty.html'
+        style={{ width: '100%', height: '100%', overflow: 'scroll' }}
         {...restProps}
       />
     </Container>
