@@ -13,7 +13,9 @@
     "postbuild": "prettier --print-width 155 \"./out/**/*.html\" --write",
     "add": "node scripts/new-post"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "prettier": "^2.0.5"
+  },
   "dependencies": {
     "front-matter": "^4.0.2",
     "isomorphic-unfetch": "^3.0.0",
