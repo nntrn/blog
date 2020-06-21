@@ -1,18 +1,16 @@
 import routes from '../routes.json'
 import Link from 'next/link'
 import config from '../blog.config'
-import styled from 'styled-components'
-
-export const Count = styled.span`
-  font-size: 0.8em;
-  margin-left: 0.2em;
-  color: #aaa;
-`
 
 const TagCount = (props) => {
   return (
     <span className='tag-count'>
-      <Count>({props.count})</Count>
+      {`(${props.count})`}
+      <style jsx>{`
+        font-size: 0.8em;
+        margin-left: 0.2em;
+        color: #aaa;
+      `}</style>
     </span>
   )
 }
@@ -31,7 +29,7 @@ const TagsList = (props) => {
   })
 
   return (
-    <ul {...props} style={{ borderBottom: '2px solid #ddd', paddingBottom: '1rem' }}>
+    <ul {...props}>
       <li>
         <Link href='/'>
           <a>all</a>
@@ -45,9 +43,14 @@ const TagsList = (props) => {
             <Link href={config.dynamic.tag} as={'/' + e[0].replace(/\s/g, '-')}>
               <a>{e[0]}</a>
             </Link>
-            <Count>({e[1]})</Count>
+            <TagCount count={e[1]} />
           </li>
         ))}
+      <style jsx>{`
+        ul{
+          margin:0;
+        }`}
+      </style>
     </ul>
   )
 }

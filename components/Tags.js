@@ -1,21 +1,27 @@
-import styled from 'styled-components'
 import Link from 'next/link'
 import config from '../blog.config'
 
-const Tags = styled.div`
-  margin: 0;
-`
-
-const index = ({ tags, children, ...rest }) => {
+const Tags = ({ tags, children, ...rest }) => {
   return (
-    <Tags className='tags' {...rest}>
+    <div className='tags' {...rest}>
       {children}
       {tags.map((e, i) => (
         <Link href={config.dynamic.tag} as={'/' + e.replace(/\s/g, '-')} key={e + i}>
-          <a className='tag'>{e}</a>
+          <a style={{color: '#aaa'}}>{e}</a>
         </Link>
       ))}
-    </Tags>
+      <style jsx>{`
+        font-size: 0.85em;
+        text-transform: uppercase;
+        margin-right: 0.5rem;
+        border-radius: 41px;
+        white-space: pre-line;
+        word-break:keep-all;
+      a{
+        display:inline-block;
+      }
+  `}</style>
+    </div>
   )
 }
-export default index
+export default Tags

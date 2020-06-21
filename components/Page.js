@@ -1,13 +1,11 @@
 import Head from 'next/head'
 
 import { TagsList, SiteHead, Search } from './'
-import { TagList, Section } from '../src/styles'
-
 import RootStyles from '../src/root'
 import config from '../blog.config'
 
 const Page = (props) => {
-  const { description, url, title, children, html, content, frontmatter, ...rest } = props
+  const { description, url, title, children, ...rest } = props
   return (
     <>
       <Head>
@@ -21,20 +19,36 @@ const Page = (props) => {
 
       <RootStyles main='#fff' />
 
-      <div className='page' style={{ margin: 'auto', display: 'flex', padding: '1rem' }}>
-        <TagList>
+      <div className='page' {...rest}>
+        <nav className="hide-mobile">
           <h4>TAGS</h4>
-          <TagsList style={{ margin: '0' }} />
-
+          <TagsList />
+          <hr/>
           <a href={config.social.github}>
-            <i className='fab fa-github fa-lg'></i>
+            <i className='fab fa-github fa-lg'/>
           </a>
-        </TagList>
-        <Section>
+        </nav>
+        <section>
           <Search />
           {children}
-        </Section>
+        </section>
+        <style jsx>{`
+        section {
+          margin: 0 auto;
+          flex-grow: 3;
+          width: 70%;
+          padding: 0 2rem;
+        }
+        .page{margin:auto;display:flex;padding:1rem}
+        h4{margin:0}
+        nav ul, nav li{
+          margin:0;
+          padding:0;list-style-type:none;
+          word-break:keep-all
+        }
+        `}</style>
       </div>
+
     </>
   )
 }
