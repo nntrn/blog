@@ -4,8 +4,6 @@ const config = require('./blog.config')
 module.exports = {
   // exportTrailingSlash: true,
 
-  distDir: 'out',
-  
   devIndicators: {
     autoPrerender: false,
   },
