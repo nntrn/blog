@@ -8,7 +8,6 @@ const theme = {
   gray: '#586069',
   bg: '#f6f8fa',
   border: '#e1e4e8',
-  fontFamily: 'arial,sans-serif',
 }
 
 const GlobalStyle = createGlobalStyle`
@@ -22,12 +21,10 @@ const GlobalStyle = createGlobalStyle`
 body {
   color: ${(props) => props.body};
   background: ${(props) => props.main};
-  font-family:${(props) => props.fontFamily};
 }
 a,.color-link{
   color: ${(props) => props.link};
 }
-
 .color-link-light{
    color: ${(props) => LightenDarkenColor(props.link, 80)}
 }

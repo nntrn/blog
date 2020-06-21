@@ -27,12 +27,13 @@
 
   style.type = 'text/css'
   style.textContent = [
-    '.as-console-wrapper { position: fixed; bottom: 0; left: 0; right: 0; max-height: 150px; overflow-y: scroll; overflow-x: hidden; border-top: 1px solid #000; display: none; }',
-    '.as-console { background: #e9e9e9; border: 1px solid #ccc; display: table; width: 100%; border-collapse: collapse; }',
-    '.as-console-row { display: table-row; font-family: monospace; font-size: 13px; }',
-    '.as-console-row:after { display: table-cell; padding: 3px 6px; color: rgba(0,0,0,.35); border: 1px solid #ccc; content: attr(data-date); vertical-align: top; }',
+    '.as-console-wrapper { position: fixed; bottom: 0; left: 0; right: 0; max-height: 150px; overflow-y: scroll; overflow-x: hidden; display: none;font-family: "SFMono-Regular", Menlo, Monaco, Consolas, monospace; font-size:.85em;}',
+    '.as-console-wrapper:before { content: \'console\'; display: block; width: 100%;z-index: 100;line-height:1;font-family:sans-serif;color:#aaa; font-size:.8em;position:sticky;top:0;background:white;box-shadow: inset 0px -2px 3px 0 rgba(0,0,0,.1);}',
+    '.as-console { background: #ddd; color:#444; display: table; width: 100%; border-collapse: collapse;  }',
+    '.as-console-row { border: 1px solid #ccc;position:relative }',
+    '.as-console-row:after {position:absolute;right:0;top:0;background: white; border: 1px solid #ccc; content: attr(data-date);font-size:.85em;margin:0 2px; }',
     '.as-console-row + .as-console-row > * { border: 1px solid #ccc; }',
-    '.as-console-row-code { width: 100%; white-space: pre-wrap; padding: 3px 5px; display: table-cell; font-family: monospace; font-size: 13px; vertical-align: middle; }',
+    '.as-console-row-code { width: 100%; white-space: pre-wrap; padding: 3px 5px; display: table-cell; font-family: monospace; vertical-align: middle; }',
     ".as-console-error:before { content: 'Error: '; color: #f00; }",
     ".as-console-assert:before { content: 'Assertion failed: '; color: #f00; }",
     ".as-console-info:before { content: 'Info: '; color: #00f; }",

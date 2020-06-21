@@ -20,15 +20,16 @@ module.exports = {
     username: 'nntrn',
   },
   dir: __dirname,
+  root: __dirname,
   social: {
     github: 'https://github.com/nntrn/blog',
   },
   stylesheets: [
     'https://unpkg.com/sanitize.css',
-    'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/night-owl.min.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css',
-    '/style.css',
-    // '/main.css',
+    '/assets/style.css',
+    '/assets/print.css',
   ],
   scripts: {
     console: '/assets/console.js',
@@ -55,7 +56,7 @@ module.exports = {
   theme: {
     color: {
       primary: '#0074d9',
-      secondary: '#e74c3c',
+      secondary: '#159739',
     },
   },
 }

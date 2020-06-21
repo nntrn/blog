@@ -12,7 +12,9 @@
     "export": "next build && next export",
     "add": "node scripts/new-post"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint-plugin-react": "^7.20.0"
+  },
   "dependencies": {
     "front-matter": "^4.0.2",
     "isomorphic-unfetch": "^3.0.0",

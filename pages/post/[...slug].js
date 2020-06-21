@@ -11,9 +11,9 @@ import config from '../../blog.config'
 import { simpleMarkdownToHTML } from '../../components/utils/mark'
 
 const preBlockLang = {
-  css: ['css', 'scss', 'sass', 'less', 'stylus', 'postcss'],
-  html: ['html', 'slim', 'haml', 'markdown', 'pug'],
-  js: ['js', 'babel', 'typescript', 'coffeescript', 'livescript'],
+  css: [ 'css', 'scss', 'sass', 'less', 'stylus', 'postcss' ],
+  html: [ 'html', 'slim', 'haml', 'markdown', 'pug' ],
+  js: [ 'js', 'babel', 'typescript', 'coffeescript', 'livescript' ],
   getAvailable: function (type, input = '') {
     return this[type].includes(input.toLowerCase()) ? input.toLowerCase() : type
   },
@@ -40,7 +40,7 @@ const Post = (props) => {
   const url = (content && content.url) || ''
 
   return (
-    <Page title={title} description={description} url={[config.url, url].join('')}>
+    <Page title={title} description={description} url={[ config.url, url ].join('')}>
       <header>
         <h1>{title}</h1>
         <span
