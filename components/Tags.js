@@ -5,7 +5,7 @@ const Tags = ({ tags, children, ...rest }) => {
   return (
     <div className='tags' {...rest}>
       {children}
-      {tags.map((e, i) => (
+      {tags && tags.map((e, i) => (
         <Link href={config.dynamic.tag} as={'/' + e.replace(/\s/g, '-')} key={e + i}>
           <a style={{color: '#aaa'}}>{e}</a>
         </Link>
